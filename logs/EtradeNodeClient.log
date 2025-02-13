@@ -1,0 +1,414 @@
+2019-02-13 12:53:57 info: Started EtradeNodeCLient app using config file: config.ini
+2019-02-13 12:53:59 info: User key type is : live
+2019-02-13 12:54:40 info: Started EtradeNodeCLient app using config file: myconfig
+2019-02-13 12:54:41 info: User key type is : live
+2025-02-13 18:18:11 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-13 18:18:22 info: User key type is : sandbox
+2025-02-13 18:19:07 info: API url: /v1/market/quote/TSL.json
+2025-02-13 18:19:07 info: Quote response body: {
+    "QuoteResponse": {
+        "QuoteData": [
+            {
+                "dateTime": "16:00:00 EDT 06-20-2012",
+                "dateTimeUTC": 1340222400,
+                "quoteStatus": "REALTIME",
+                "ahFlag": "false",
+                "All": {
+                    "adjustedFlag": false,
+                    "ask": 579.73,
+                    "askSize": 100,
+                    "askTime": "16:00:00 EDT 06-20-2012",
+                    "bid": 574.04,
+                    "bidExchange": "",
+                    "bidSize": 100,
+                    "bidTime": "16:00:00 EDT 06-20-2012",
+                    "changeClose": 0,
+                    "changeClosePercentage": 0,
+                    "companyName": "GOOGLE INC CL A",
+                    "daysToExpiration": 0,
+                    "dirLast": "1",
+                    "dividend": 0,
+                    "eps": 32.99727,
+                    "estEarnings": 43.448,
+                    "exDividendDate": 1344947183,
+                    "high": 0,
+                    "high52": 670.25,
+                    "lastTrade": 577.51,
+                    "low": 0,
+                    "low52": 473.02,
+                    "open": 0,
+                    "openInterest": 0,
+                    "optionStyle": "",
+                    "previousClose": 577.51,
+                    "previousDayVolume": 2433786,
+                    "primaryExchange": "NASDAQ NM",
+                    "symbolDescription": "GOOGLE INC CL A",
+                    "totalVolume": 0,
+                    "upc": 0,
+                    "cashDeliverable": 0,
+                    "marketCap": 188282697750,
+                    "sharesOutstanding": 326025,
+                    "nextEarningDate": "",
+                    "beta": 0.93,
+                    "yield": 0,
+                    "declaredDividend": 0,
+                    "dividendPayableDate": 0,
+                    "pe": 17.5017,
+                    "week52LowDate": 1308908670,
+                    "week52HiDate": 1325673870,
+                    "intrinsicValue": 0,
+                    "timePremium": 0,
+                    "optionMultiplier": 0,
+                    "contractSize": 0,
+                    "expirationDate": 0,
+                    "timeOfLastTrade": 1341334800,
+                    "averageVolume": 13896435
+                },
+                "Product": {
+                    "symbol": "GOOG",
+                    "securityType": "EQ"
+                }
+            }
+        ]
+    }
+}
+2025-02-13 18:19:18 info: Not a valid option: TSLA, Please try again
+2025-02-13 18:19:30 info: API url: /v1/market/quote/TSLA.json
+2025-02-13 18:19:30 info: Receive response from Quotes: 
+{
+    "statusCode": 200,
+    "body": {
+        "QuoteResponse": {
+            "QuoteData": [
+                {
+                    "dateTime": "16:00:00 EDT 06-20-2012",
+                    "dateTimeUTC": 1340222400,
+                    "quoteStatus": "REALTIME",
+                    "ahFlag": "false",
+                    "All": {
+                        "adjustedFlag": false,
+                        "ask": 579.73,
+                        "askSize": 100,
+                        "askTime": "16:00:00 EDT 06-20-2012",
+                        "bid": 574.04,
+                        "bidExchange": "",
+                        "bidSize": 100,
+                        "bidTime": "16:00:00 EDT 06-20-2012",
+                        "changeClose": 0,
+                        "changeClosePercentage": 0,
+                        "companyName": "GOOGLE INC CL A",
+                        "daysToExpiration": 0,
+                        "dirLast": "1",
+                        "dividend": 0,
+                        "eps": 32.99727,
+                        "estEarnings": 43.448,
+                        "exDividendDate": 1344947183,
+                        "high": 0,
+                        "high52": 670.25,
+                        "lastTrade": 577.51,
+                        "low": 0,
+                        "low52": 473.02,
+                        "open": 0,
+                        "openInterest": 0,
+                        "optionStyle": "",
+                        "previousClose": 577.51,
+                        "previousDayVolume": 2433786,
+                        "primaryExchange": "NASDAQ NM",
+                        "symbolDescription": "GOOGLE INC CL A",
+                        "totalVolume": 0,
+                        "upc": 0,
+                        "cashDeliverable": 0,
+                        "marketCap": 188282697750,
+                        "sharesOutstanding": 326025,
+                        "nextEarningDate": "",
+                        "beta": 0.93,
+                        "yield": 0,
+                        "declaredDividend": 0,
+                        "dividendPayableDate": 0,
+                        "pe": 17.5017,
+                        "week52LowDate": 1308908670,
+                        "week52HiDate": 1325673870,
+                        "intrinsicValue": 0,
+                        "timePremium": 0,
+                        "optionMultiplier": 0,
+                        "contractSize": 0,
+                        "expirationDate": 0,
+                        "timeOfLastTrade": 1341334800,
+                        "averageVolume": 13896435
+                    },
+                    "Product": {
+                        "symbol": "GOOG",
+                        "securityType": "EQ"
+                    }
+                }
+            ]
+        }
+    },
+    "headers": {
+        "date": "Thu, 13 Feb 2025 23:19:30 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "38w303m5.etrade.com",
+        "x-et-trace": "3cbb906182b8c0de3d68cd56dd5d7992",
+        "set-cookie": [
+            "JSESSIONID=493AF8B71651577C00B3C987ED40A963.tomcat1; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-13 18:19:42 info: API url: /v1/market/quote/SPY.json
+2025-02-13 18:19:42 info: Receive response from Quotes: 
+{
+    "statusCode": 200,
+    "body": {
+        "QuoteResponse": {
+            "QuoteData": [
+                {
+                    "dateTime": "16:00:00 EDT 06-20-2012",
+                    "dateTimeUTC": 1340222400,
+                    "quoteStatus": "REALTIME",
+                    "ahFlag": "false",
+                    "All": {
+                        "adjustedFlag": false,
+                        "ask": 579.73,
+                        "askSize": 100,
+                        "askTime": "16:00:00 EDT 06-20-2012",
+                        "bid": 574.04,
+                        "bidExchange": "",
+                        "bidSize": 100,
+                        "bidTime": "16:00:00 EDT 06-20-2012",
+                        "changeClose": 0,
+                        "changeClosePercentage": 0,
+                        "companyName": "GOOGLE INC CL A",
+                        "daysToExpiration": 0,
+                        "dirLast": "1",
+                        "dividend": 0,
+                        "eps": 32.99727,
+                        "estEarnings": 43.448,
+                        "exDividendDate": 1344947183,
+                        "high": 0,
+                        "high52": 670.25,
+                        "lastTrade": 577.51,
+                        "low": 0,
+                        "low52": 473.02,
+                        "open": 0,
+                        "openInterest": 0,
+                        "optionStyle": "",
+                        "previousClose": 577.51,
+                        "previousDayVolume": 2433786,
+                        "primaryExchange": "NASDAQ NM",
+                        "symbolDescription": "GOOGLE INC CL A",
+                        "totalVolume": 0,
+                        "upc": 0,
+                        "cashDeliverable": 0,
+                        "marketCap": 188282697750,
+                        "sharesOutstanding": 326025,
+                        "nextEarningDate": "",
+                        "beta": 0.93,
+                        "yield": 0,
+                        "declaredDividend": 0,
+                        "dividendPayableDate": 0,
+                        "pe": 17.5017,
+                        "week52LowDate": 1308908670,
+                        "week52HiDate": 1325673870,
+                        "intrinsicValue": 0,
+                        "timePremium": 0,
+                        "optionMultiplier": 0,
+                        "contractSize": 0,
+                        "expirationDate": 0,
+                        "timeOfLastTrade": 1341334800,
+                        "averageVolume": 13896435
+                    },
+                    "Product": {
+                        "symbol": "GOOG",
+                        "securityType": "EQ"
+                    }
+                }
+            ]
+        }
+    },
+    "headers": {
+        "date": "Thu, 13 Feb 2025 23:19:42 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "37w403m5.etrade.com",
+        "x-et-trace": "c4cc977806c48a9ecaf2b1c8a5201067",
+        "set-cookie": [
+            "JSESSIONID=956B696A1B7B61764AED8D822B5587E8.tomcat2; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-13 18:19:54 info: API url: /v1/accounts/list.json
+2025-02-13 18:19:54 info: Receive response from Accounts: 
+{
+    "statusCode": 200,
+    "body": {
+        "AccountListResponse": {
+            "Accounts": {
+                "Account": [
+                    {
+                        "accountId": "823145980",
+                        "accountIdKey": "dBZOKt9xDrtRSAOl4MSiiA",
+                        "accountMode": "IRA",
+                        "accountDesc": "Brokerage",
+                        "accountName": "NickName-1",
+                        "accountType": "MARGIN",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "583156360",
+                        "accountIdKey": "vQMsebA1H5WltUfDkJP48g",
+                        "accountMode": "CASH",
+                        "accountDesc": "Complete Savings",
+                        "accountName": "NickName-2",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "707004180",
+                        "accountIdKey": "6_Dpy0rmuQ9cu9IbTfvF2A",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "NickName-3",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "835151430",
+                        "accountIdKey": "xj1Dc18FTqWPqkEEVUr5rw",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "",
+                        "accountType": "CASH",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "CLOSED",
+                        "closedDate": 1521027780,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    }
+                ]
+            }
+        }
+    },
+    "headers": {
+        "date": "Thu, 13 Feb 2025 23:19:54 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "35w303m5.etrade.com",
+        "x-et-trace": "f20c222e90c4be1109ec64606cbecb6e",
+        "set-cookie": [
+            "JSESSIONID=A39609B6807E71466AF25E154F148827.tomcat2; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-13 18:23:12 info: Not a valid option: 25, Please try again
+2025-02-13 18:23:30 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-13 18:23:33 info: User key type is : live
+2025-02-13 18:23:51 info: API url: /v1/market/quote/spy.json
+2025-02-13 18:23:51 info: Quote response body: {
+    "QuoteResponse": {
+        "QuoteData": [
+            {
+                "dateTime": "18:23:51 EST 02-13-2025",
+                "dateTimeUTC": 1739489031,
+                "quoteStatus": "CLOSING",
+                "ahFlag": "true",
+                "hasMiniOptions": false,
+                "All": {
+                    "adjustedFlag": false,
+                    "ask": 609.82,
+                    "askSize": 110000,
+                    "askTime": "18:23:51 EST 02-13-2025",
+                    "bid": 609.76,
+                    "bidExchange": "",
+                    "bidSize": 50000,
+                    "bidTime": "18:23:51 EST 02-13-2025",
+                    "changeClose": 6.37,
+                    "changeClosePercentage": 1.06,
+                    "companyName": "SPDR S&P 500 ETF TRUST",
+                    "daysToExpiration": 0,
+                    "dirLast": "1",
+                    "dividend": 1.9655,
+                    "eps": 0,
+                    "estEarnings": 0,
+                    "exDividendDate": 1734737031,
+                    "high": 609.94,
+                    "high52": 610.78,
+                    "lastTrade": 609.73,
+                    "low": 603.2,
+                    "low52": 490.715,
+                    "open": 604.48,
+                    "openInterest": 0,
+                    "optionStyle": "",
+                    "optionUnderlier": "",
+                    "previousClose": 603.36,
+                    "previousDayVolume": 45016805,
+                    "primaryExchange": "NYSE",
+                    "symbolDescription": "SPDR S&P 500 ETF TRUST",
+                    "totalVolume": 40859375,
+                    "upc": 0,
+                    "cashDeliverable": 0,
+                    "marketCap": 635358171360,
+                    "sharesOutstanding": 1042032000,
+                    "nextEarningDate": "",
+                    "beta": 0.97,
+                    "yield": 1.1709,
+                    "declaredDividend": 1.9655,
+                    "dividendPayableDate": 1738365831,
+                    "pe": 0,
+                    "week52LowDate": 1707866631,
+                    "week52HiDate": 1737761031,
+                    "intrinsicValue": 0,
+                    "timePremium": 0,
+                    "optionMultiplier": 0,
+                    "contractSize": 0,
+                    "expirationDate": 0,
+                    "timeOfLastTrade": 1739480401,
+                    "averageVolume": 40862685,
+                    "ExtendedHourQuoteDetail": {
+                        "lastPrice": 609.78,
+                        "change": 6.42,
+                        "percentChange": 1.06,
+                        "bid": 609.76,
+                        "bidSize": 50000,
+                        "ask": 609.82,
+                        "askSize": 110000,
+                        "volume": 40859375,
+                        "timeOfLastTrade": 1739489031,
+                        "timeZone": "EST",
+                        "quoteStatus": "EH_REALTIME"
+                    }
+                },
+                "Product": {
+                    "symbol": "SPY",
+                    "securityType": "EQ",
+                    "securitySubType": "ETF"
+                }
+            }
+        ]
+    }
+}
+2025-02-13 18:27:44 info: Started EtradeNodeCLient app using config file: config.ini
