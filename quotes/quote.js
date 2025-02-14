@@ -96,7 +96,6 @@ const quoteFetch = async (symbol) => {
 
 
 
-
 const runBot = () => {
   const uuid = require("uuid");
   const { setInterval } = require("timers");
