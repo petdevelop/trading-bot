@@ -41,4 +41,11 @@ const quoteFetch = (symbol) => {
   }
 };
 
-module.exports = quoteFetch;
+const runBot = (symbol) => {
+  console.log('Running ...')
+}
+
+module.exports = {
+  quoteFetch,
+  runBot
+}

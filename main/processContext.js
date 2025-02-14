@@ -11,7 +11,7 @@ const cancelOrder = require('../order/cancelOrder');
 const previewOrder = require('../order/previewOrder');
 const viewOpenOrder = require('../order/viewOpenOrder');
 const getAcctContext = require('../accounts/getAcctContext');
-const quoteFetch = require('../quotes/quote');
+const {quoteFetch, runBot} = require('../quotes/quote');
 const { oauthAcctFetch, acctFetch } = require('../accounts/account');
 
 const reqTokenFail = (err) => {
@@ -47,6 +47,9 @@ function processMarket(input, errmsg1, errmsg2, context) {
       }
       break;
     case '3':
+      runBot()
+      break;
+    case '4':
       process.exit(0);
       break;
     default:
