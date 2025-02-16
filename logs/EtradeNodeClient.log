@@ -412,3 +412,1237 @@
     }
 }
 2025-02-13 18:27:44 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:21:03 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:21:08 info: User key type is : sandbox
+2025-02-16 11:21:28 info: receive response from Accounts: 
+{
+    "statusCode": 200,
+    "body": {
+        "AccountListResponse": {
+            "Accounts": {
+                "Account": [
+                    {
+                        "accountId": "823145980",
+                        "accountIdKey": "dBZOKt9xDrtRSAOl4MSiiA",
+                        "accountMode": "IRA",
+                        "accountDesc": "Brokerage",
+                        "accountName": "NickName-1",
+                        "accountType": "MARGIN",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "583156360",
+                        "accountIdKey": "vQMsebA1H5WltUfDkJP48g",
+                        "accountMode": "CASH",
+                        "accountDesc": "Complete Savings",
+                        "accountName": "NickName-2",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "707004180",
+                        "accountIdKey": "6_Dpy0rmuQ9cu9IbTfvF2A",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "NickName-3",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "835151430",
+                        "accountIdKey": "xj1Dc18FTqWPqkEEVUr5rw",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "",
+                        "accountType": "CASH",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "CLOSED",
+                        "closedDate": 1521027780,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    }
+                ]
+            }
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:21:28 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "27w603m3.etrade.com",
+        "x-et-trace": "e4a466b5d2911b5983bf2d2ac7b0e3a9",
+        "set-cookie": [
+            "JSESSIONID=E25D713BF19F50B23C2D1CBE5CE31356.tomcat3; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:21:38 info: API url: /v1/accounts/dBZOKt9xDrtRSAOl4MSiiA/orders.json
+2025-02-16 11:21:39 info: Receive response from Order  
+{
+    "statusCode": 200,
+    "body": {
+        "OrdersResponse": {
+            "marker": "12345678999",
+            "next": "https://api.sit.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders?marker=12345678999",
+            "Order": [
+                {
+                    "orderId": 479,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/479",
+                    "orderType": "OPTN",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 123453456,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "RESEARCH IN MOTION LTD COM",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 5,
+                                    "filledQuantity": 5,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "RIMM",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 3,
+                                        "expiryDay": 9,
+                                        "strikePrice": 12,
+                                        "productId": {
+                                            "symbol": "RIMM"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 477,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/477",
+                    "orderType": "ONE_CANCELS_ALL",
+                    "totalOrderValue": 209.99,
+                    "totalCommission": 10.74,
+                    "OrderDetail": [
+                        {
+                            "orderNumber": 1,
+                            "placedTime": 1331699203122,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 2,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "bracketedLimitPrice": 2,
+                            "initialStopPrice": 2,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "ETRADE Financials",
+                                    "orderAction": "BUY",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 100,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "ETFC",
+                                        "securityType": "EQ",
+                                        "productId": {
+                                            "symbol": "ETFC"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "orderNumber": 2,
+                            "placedTime": 1331699203,
+                            "orderValue": 231,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 0.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "initialStopPrice": 0.5,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "MON Mar 9 '12 $85 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 1,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "MON",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 4,
+                                        "expiryDay": 21,
+                                        "strikePrice": 85,
+                                        "productId": {
+                                            "symbol": "MON"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 475,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/475",
+                    "orderType": "SPREADS",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 1331742953,
+                            "executedTime": 1331742955432,
+                            "orderValue": 4445.99,
+                            "status": "EXECUTED",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "NET_DEBIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "REE Jul 21 '12 $7 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 7,
+                                        "expiryDay": 21,
+                                        "strikePrice": 7,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                },
+                                {
+                                    "symbolDescription": "REE Jan 19 '13 $12.50 Put",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "PUT",
+                                        "expiryYear": 2013,
+                                        "expiryMonth": 1,
+                                        "expiryDay": 19,
+                                        "strikePrice": 12.5,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:21:39 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "32w603m3.etrade.com",
+        "x-et-trace": "782a32647b30ccc293e36f68f6e2fa78",
+        "set-cookie": [
+            "JSESSIONID=FA1A94F608BCAE65C17378EC8F51BDC0.tomcat4; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:22:54 info: API url: /v1/accounts/dBZOKt9xDrtRSAOl4MSiiA/orders/preview.json
+2025-02-16 11:22:54 info: Request body: {"PreviewOrderRequest": {"orderType": "EQ","clientOrderId":7039096244,
+  "Order": [{"allOrNone": "false","priceType": "MARKET",
+  "orderTerm":"GOOD_FOR_DAY","marketSession": "REGULAR","limitPrice":0,
+  "Instrument": [{"Product": {"securityType": "EQ","symbol":"SPY"},
+  "orderAction":"BUY","quantityType": "QUANTITY", "quantity":1}]}]}}
+2025-02-16 11:22:54 info: Receive response from Order  
+{
+    "statusCode": 200,
+    "body": {
+        "PreviewOrderResponse": {
+            "orderType": "EQ",
+            "previewTime": 1354512315217,
+            "dstFlag": false,
+            "accountId": "835376230",
+            "optionLevelCd": 4,
+            "marginLevelCd": "MARGIN_TRADING_ALLOWED",
+            "MessageList": {},
+            "Order": [
+                {
+                    "orderTerm": "GOOD_FOR_DAY",
+                    "priceType": "MARKET",
+                    "limitPrice": 0,
+                    "stopPrice": 0,
+                    "marketSession": "REGULAR",
+                    "allOrNone": false,
+                    "messages": {},
+                    "egQual": "EG_QUAL_OUTSIDE_GUARANTEED_PERIOD",
+                    "estimatedCommission": 6.99,
+                    "estimatedFees": 0,
+                    "netPrice": 0,
+                    "netBid": 0,
+                    "netAsk": 0,
+                    "gcd": 0,
+                    "ratio": "",
+                    "Instrument": [
+                        {
+                            "symbolDescription": "",
+                            "orderAction": "BUY",
+                            "quantityType": "QUANTITY",
+                            "quantity": 100,
+                            "cancelQuantity": 0,
+                            "reserveOrder": false,
+                            "reserveQuantity": 0,
+                            "Product": {
+                                "symbol": "IBM",
+                                "securityType": "EQ"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "PreviewIds": [
+                {
+                    "previewId": 1627181131
+                }
+            ],
+            "PortfolioMargin": {
+                "houseExcessEquityNew": 0,
+                "pmEligible": false,
+                "houseExcessEquityCurr": 0,
+                "houseExcessEquityChange": 0
+            },
+            "Disclosure": {
+                "ehDisclosureFlag": false,
+                "conditionalDisclosureFlag": true,
+                "aoDisclosureFlag": false
+            }
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:22:54 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "32w503m3.etrade.com",
+        "x-et-trace": "9d864c5c5e32fceb72027bd95fc52f48",
+        "set-cookie": [
+            "JSESSIONID=86DC7447E1BBAEE8C2C5D52AA70281AB.tomcat3; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:23:06 info: API url: /v1/accounts/dBZOKt9xDrtRSAOl4MSiiA/orders/preview.json
+2025-02-16 11:23:06 info: Request body: {"PreviewOrderRequest": {"orderType": "EQ","clientOrderId":2662438153,
+  "Order": [{"allOrNone": "false","priceType": "MARKET",
+  "orderTerm":"GOOD_FOR_DAY","marketSession": "REGULAR","limitPrice":0,
+  "Instrument": [{"Product": {"securityType": "EQ","symbol":"spy"},
+  "orderAction":"BUY","quantityType": "QUANTITY", "quantity":1}]}]}}
+2025-02-16 11:23:06 info: Receive response from Order  
+{
+    "statusCode": 200,
+    "body": {
+        "PreviewOrderResponse": {
+            "orderType": "EQ",
+            "previewTime": 1354512315217,
+            "dstFlag": false,
+            "accountId": "835376230",
+            "optionLevelCd": 4,
+            "marginLevelCd": "MARGIN_TRADING_ALLOWED",
+            "MessageList": {},
+            "Order": [
+                {
+                    "orderTerm": "GOOD_FOR_DAY",
+                    "priceType": "MARKET",
+                    "limitPrice": 0,
+                    "stopPrice": 0,
+                    "marketSession": "REGULAR",
+                    "allOrNone": false,
+                    "messages": {},
+                    "egQual": "EG_QUAL_OUTSIDE_GUARANTEED_PERIOD",
+                    "estimatedCommission": 6.99,
+                    "estimatedFees": 0,
+                    "netPrice": 0,
+                    "netBid": 0,
+                    "netAsk": 0,
+                    "gcd": 0,
+                    "ratio": "",
+                    "Instrument": [
+                        {
+                            "symbolDescription": "",
+                            "orderAction": "BUY",
+                            "quantityType": "QUANTITY",
+                            "quantity": 100,
+                            "cancelQuantity": 0,
+                            "reserveOrder": false,
+                            "reserveQuantity": 0,
+                            "Product": {
+                                "symbol": "IBM",
+                                "securityType": "EQ"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "PreviewIds": [
+                {
+                    "previewId": 1627181131
+                }
+            ],
+            "PortfolioMargin": {
+                "houseExcessEquityNew": 0,
+                "pmEligible": false,
+                "houseExcessEquityCurr": 0,
+                "houseExcessEquityChange": 0
+            },
+            "Disclosure": {
+                "ehDisclosureFlag": false,
+                "conditionalDisclosureFlag": true,
+                "aoDisclosureFlag": false
+            }
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:23:06 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "32w503m3.etrade.com",
+        "x-et-trace": "9c0d36092da3646b0032ce1cb420f68a",
+        "set-cookie": [
+            "JSESSIONID=7E90612EE8CB94047A3C1A0D0CF2E687.tomcat3; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:32:38 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:33:00 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:34:32 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:34:44 info: User key type is : sandbox
+2025-02-16 11:37:07 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:37:27 info: User key type is : live
+2025-02-16 11:41:18 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:46:18 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:50:06 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:50:20 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:50:22 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:50:28 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:50:37 info: User key type is : sandbox
+2025-02-16 11:50:59 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:52:00 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:53:15 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:53:19 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:53:47 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:53:51 info: Not a valid option: 4, Please try again
+2025-02-16 11:55:18 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:55:23 info: Not a valid option: , Please try again
+2025-02-16 11:55:49 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:55:52 info: User key type is : undefined
+2025-02-16 11:55:59 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:56:01 info: User key type is : undefined
+2025-02-16 11:56:10 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:56:11 info: User key type is : sandbox
+2025-02-16 11:56:36 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:56:38 info: User key type is : undefined
+2025-02-16 11:57:22 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:57:43 info: User key type is : undefined
+2025-02-16 11:57:47 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:57:48 info: User key type is : sandbox
+2025-02-16 11:58:04 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:58:06 info: User key type is : undefined
+2025-02-16 11:59:22 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:59:24 info: User key type is : sandbox
+2025-02-16 11:59:37 info: API url: /v1/market/quote/spy.json
+2025-02-16 11:59:37 info: Quote response body: {
+    "QuoteResponse": {
+        "QuoteData": [
+            {
+                "dateTime": "16:00:00 EDT 06-20-2012",
+                "dateTimeUTC": 1340222400,
+                "quoteStatus": "REALTIME",
+                "ahFlag": "false",
+                "All": {
+                    "adjustedFlag": false,
+                    "ask": 579.73,
+                    "askSize": 100,
+                    "askTime": "16:00:00 EDT 06-20-2012",
+                    "bid": 574.04,
+                    "bidExchange": "",
+                    "bidSize": 100,
+                    "bidTime": "16:00:00 EDT 06-20-2012",
+                    "changeClose": 0,
+                    "changeClosePercentage": 0,
+                    "companyName": "GOOGLE INC CL A",
+                    "daysToExpiration": 0,
+                    "dirLast": "1",
+                    "dividend": 0,
+                    "eps": 32.99727,
+                    "estEarnings": 43.448,
+                    "exDividendDate": 1344947183,
+                    "high": 0,
+                    "high52": 670.25,
+                    "lastTrade": 577.51,
+                    "low": 0,
+                    "low52": 473.02,
+                    "open": 0,
+                    "openInterest": 0,
+                    "optionStyle": "",
+                    "previousClose": 577.51,
+                    "previousDayVolume": 2433786,
+                    "primaryExchange": "NASDAQ NM",
+                    "symbolDescription": "GOOGLE INC CL A",
+                    "totalVolume": 0,
+                    "upc": 0,
+                    "cashDeliverable": 0,
+                    "marketCap": 188282697750,
+                    "sharesOutstanding": 326025,
+                    "nextEarningDate": "",
+                    "beta": 0.93,
+                    "yield": 0,
+                    "declaredDividend": 0,
+                    "dividendPayableDate": 0,
+                    "pe": 17.5017,
+                    "week52LowDate": 1308908670,
+                    "week52HiDate": 1325673870,
+                    "intrinsicValue": 0,
+                    "timePremium": 0,
+                    "optionMultiplier": 0,
+                    "contractSize": 0,
+                    "expirationDate": 0,
+                    "timeOfLastTrade": 1341334800,
+                    "averageVolume": 13896435
+                },
+                "Product": {
+                    "symbol": "GOOG",
+                    "securityType": "EQ"
+                }
+            }
+        ]
+    }
+}
+2025-02-16 11:59:40 info: API url: /v1/accounts/list.json
+2025-02-16 11:59:40 info: Receive response from Accounts: 
+{
+    "statusCode": 200,
+    "body": {
+        "AccountListResponse": {
+            "Accounts": {
+                "Account": [
+                    {
+                        "accountId": "823145980",
+                        "accountIdKey": "dBZOKt9xDrtRSAOl4MSiiA",
+                        "accountMode": "IRA",
+                        "accountDesc": "Brokerage",
+                        "accountName": "NickName-1",
+                        "accountType": "MARGIN",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "583156360",
+                        "accountIdKey": "vQMsebA1H5WltUfDkJP48g",
+                        "accountMode": "CASH",
+                        "accountDesc": "Complete Savings",
+                        "accountName": "NickName-2",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "707004180",
+                        "accountIdKey": "6_Dpy0rmuQ9cu9IbTfvF2A",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "NickName-3",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "835151430",
+                        "accountIdKey": "xj1Dc18FTqWPqkEEVUr5rw",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "",
+                        "accountType": "CASH",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "CLOSED",
+                        "closedDate": 1521027780,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    }
+                ]
+            }
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:59:40 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "35w403m5.etrade.com",
+        "x-et-trace": "b3d9fb3caae7e2caa2d2b5471de0c092",
+        "set-cookie": [
+            "JSESSIONID=6673541D23CD5575A163B2CF46DA4CF5.tomcat3; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:59:45 info: API url: /v1/accounts/dBZOKt9xDrtRSAOl4MSiiA/orders.json
+2025-02-16 11:59:45 info: Receive response from Order  
+{
+    "statusCode": 200,
+    "body": {
+        "OrdersResponse": {
+            "marker": "12345678999",
+            "next": "https://api.sit.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders?marker=12345678999",
+            "Order": [
+                {
+                    "orderId": 479,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/479",
+                    "orderType": "OPTN",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 123453456,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "RESEARCH IN MOTION LTD COM",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 5,
+                                    "filledQuantity": 5,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "RIMM",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 3,
+                                        "expiryDay": 9,
+                                        "strikePrice": 12,
+                                        "productId": {
+                                            "symbol": "RIMM"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 477,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/477",
+                    "orderType": "ONE_CANCELS_ALL",
+                    "totalOrderValue": 209.99,
+                    "totalCommission": 10.74,
+                    "OrderDetail": [
+                        {
+                            "orderNumber": 1,
+                            "placedTime": 1331699203122,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 2,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "bracketedLimitPrice": 2,
+                            "initialStopPrice": 2,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "ETRADE Financials",
+                                    "orderAction": "BUY",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 100,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "ETFC",
+                                        "securityType": "EQ",
+                                        "productId": {
+                                            "symbol": "ETFC"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "orderNumber": 2,
+                            "placedTime": 1331699203,
+                            "orderValue": 231,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 0.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "initialStopPrice": 0.5,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "MON Mar 9 '12 $85 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 1,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "MON",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 4,
+                                        "expiryDay": 21,
+                                        "strikePrice": 85,
+                                        "productId": {
+                                            "symbol": "MON"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 475,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/475",
+                    "orderType": "SPREADS",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 1331742953,
+                            "executedTime": 1331742955432,
+                            "orderValue": 4445.99,
+                            "status": "EXECUTED",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "NET_DEBIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "REE Jul 21 '12 $7 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 7,
+                                        "expiryDay": 21,
+                                        "strikePrice": 7,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                },
+                                {
+                                    "symbolDescription": "REE Jan 19 '13 $12.50 Put",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "PUT",
+                                        "expiryYear": 2013,
+                                        "expiryMonth": 1,
+                                        "expiryDay": 19,
+                                        "strikePrice": 12.5,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 16:59:45 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "40w403m5.etrade.com",
+        "x-et-trace": "5360b4161ad9ee9268b69cc59abe5662",
+        "set-cookie": [
+            "JSESSIONID=A812A6A4F7EFA6C48FC72F8197DBC4E5.tomcat4; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 11:59:55 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 11:59:57 info: User key type is : undefined
+2025-02-16 12:00:14 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:03:07 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:03:16 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:03:17 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:03:23 info: User key type is : undefined
+2025-02-16 12:03:30 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:03:31 info: User key type is : sandbox
+2025-02-16 12:07:26 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:07:45 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:07:58 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:09:55 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:10:00 info: User key type is : sandbox
+2025-02-16 12:11:03 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:11:13 info: User key type is : sandbox
+2025-02-16 12:11:33 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:11:34 info: User key type is : sandbox
+2025-02-16 12:11:42 info: Not a valid option: 4, Please try again
+2025-02-16 12:11:49 info: Not a valid option: 4, Please try again
+2025-02-16 12:12:50 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:12:56 info: Started EtradeNodeCLient app using config file: config.ini
+2025-02-16 12:13:00 info: User key type is : sandbox
+2025-02-16 12:14:22 info: receive response from Accounts: 
+{
+    "statusCode": 200,
+    "body": {
+        "AccountListResponse": {
+            "Accounts": {
+                "Account": [
+                    {
+                        "accountId": "823145980",
+                        "accountIdKey": "dBZOKt9xDrtRSAOl4MSiiA",
+                        "accountMode": "IRA",
+                        "accountDesc": "Brokerage",
+                        "accountName": "NickName-1",
+                        "accountType": "MARGIN",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "583156360",
+                        "accountIdKey": "vQMsebA1H5WltUfDkJP48g",
+                        "accountMode": "CASH",
+                        "accountDesc": "Complete Savings",
+                        "accountName": "NickName-2",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "707004180",
+                        "accountIdKey": "6_Dpy0rmuQ9cu9IbTfvF2A",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "NickName-3",
+                        "accountType": "INDIVIDUAL",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "ACTIVE",
+                        "closedDate": 0,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    },
+                    {
+                        "accountId": "835151430",
+                        "accountIdKey": "xj1Dc18FTqWPqkEEVUr5rw",
+                        "accountMode": "CASH",
+                        "accountDesc": "INDIVIDUAL",
+                        "accountName": "",
+                        "accountType": "CASH",
+                        "institutionType": "BROKERAGE",
+                        "accountStatus": "CLOSED",
+                        "closedDate": 1521027780,
+                        "shareWorksAccount": false,
+                        "fcManagedMssbClosedAccount": false
+                    }
+                ]
+            }
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 17:14:22 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "35w303m5.etrade.com",
+        "x-et-trace": "58306de5e335a35cbb0e8feebd3f15fc",
+        "set-cookie": [
+            "JSESSIONID=EA36E8CAFD8840D7D22F215DF78E8E64.tomcat4; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
+2025-02-16 12:14:32 info: API url: /v1/accounts/dBZOKt9xDrtRSAOl4MSiiA/orders.json
+2025-02-16 12:14:32 info: Receive response from Order  
+{
+    "statusCode": 200,
+    "body": {
+        "OrdersResponse": {
+            "marker": "12345678999",
+            "next": "https://api.sit.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders?marker=12345678999",
+            "Order": [
+                {
+                    "orderId": 479,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/479",
+                    "orderType": "OPTN",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 123453456,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "RESEARCH IN MOTION LTD COM",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 5,
+                                    "filledQuantity": 5,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "RIMM",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 3,
+                                        "expiryDay": 9,
+                                        "strikePrice": 12,
+                                        "productId": {
+                                            "symbol": "RIMM"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 477,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/477",
+                    "orderType": "ONE_CANCELS_ALL",
+                    "totalOrderValue": 209.99,
+                    "totalCommission": 10.74,
+                    "OrderDetail": [
+                        {
+                            "orderNumber": 1,
+                            "placedTime": 1331699203122,
+                            "orderValue": 123,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 2,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "bracketedLimitPrice": 2,
+                            "initialStopPrice": 2,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "ETRADE Financials",
+                                    "orderAction": "BUY",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 100,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "ETFC",
+                                        "securityType": "EQ",
+                                        "productId": {
+                                            "symbol": "ETFC"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "orderNumber": 2,
+                            "placedTime": 1331699203,
+                            "orderValue": 231,
+                            "status": "OPEN",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "LIMIT",
+                            "limitPrice": 0.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "initialStopPrice": 0.5,
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "MON Mar 9 '12 $85 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 1,
+                                    "filledQuantity": 0,
+                                    "averageExecutionPrice": 0,
+                                    "estimatedCommission": 9.99,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "MON",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 4,
+                                        "expiryDay": 21,
+                                        "strikePrice": 85,
+                                        "productId": {
+                                            "symbol": "MON"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "orderId": 475,
+                    "details": "https://api.etrade.com/accounts/E5Nd4LJBsEi_UyHm4Vio9g/orders/475",
+                    "orderType": "SPREADS",
+                    "OrderDetail": [
+                        {
+                            "placedTime": 1331742953,
+                            "executedTime": 1331742955432,
+                            "orderValue": 4445.99,
+                            "status": "EXECUTED",
+                            "orderTerm": "GOOD_FOR_DAY",
+                            "priceType": "NET_DEBIT",
+                            "limitPrice": 1.5,
+                            "stopPrice": 0,
+                            "marketSession": "REGULAR",
+                            "allOrNone": false,
+                            "netPrice": 0,
+                            "netBid": 0,
+                            "netAsk": 0,
+                            "gcd": 0,
+                            "ratio": "",
+                            "Instrument": [
+                                {
+                                    "symbolDescription": "REE Jul 21 '12 $7 Call",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "CALL",
+                                        "expiryYear": 2012,
+                                        "expiryMonth": 7,
+                                        "expiryDay": 21,
+                                        "strikePrice": 7,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                },
+                                {
+                                    "symbolDescription": "REE Jan 19 '13 $12.50 Put",
+                                    "orderAction": "BUY_OPEN",
+                                    "quantityType": "QUANTITY",
+                                    "orderedQuantity": 2,
+                                    "filledQuantity": 2,
+                                    "averageExecutionPrice": 1.5,
+                                    "estimatedCommission": 7.24,
+                                    "estimatedFees": 0,
+                                    "Product": {
+                                        "symbol": "REE",
+                                        "securityType": "OPTN",
+                                        "callPut": "PUT",
+                                        "expiryYear": 2013,
+                                        "expiryMonth": 1,
+                                        "expiryDay": 19,
+                                        "strikePrice": 12.5,
+                                        "productId": {
+                                            "symbol": "REE"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "headers": {
+        "date": "Sun, 16 Feb 2025 17:14:32 GMT",
+        "server": "Apache",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "apiservername": "39w403m5.etrade.com",
+        "x-et-trace": "19fe2debe594cb4c774ab805a53b1e5b",
+        "set-cookie": [
+            "JSESSIONID=E18FA2946E5BEB3AD48006185CA2E70E.tomcat1; Path=/; Secure; HttpOnly"
+        ],
+        "transfer-encoding": "chunked",
+        "content-type": "application/json",
+        "connection": "close"
+    }
+}
