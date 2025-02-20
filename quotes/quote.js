@@ -41,8 +41,83 @@ const quoteFetch = (symbol) => {
   }
 };
 
-const runBot = (symbol) => {
+const priceFetch = (symbol) => {
+  return new Promise((resolve, reject) => {
+    if (validSymbol(symbol)) {
+      const reqUrl = `${session.getQuoteUri() + symbol}.json`;
+      const authClient = session.getItem('authClient');
+      if (authClient !== null) {
+        // accessToken exists
+        logger.info(`API url: ${reqUrl}`);
+        const response = authClient.get(reqUrl);
+
+        response.then((resp) => {
+          logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
+          // printQuote(resp.body);
+          // next('market', '0', 'market', true);
+          resolve(extractPrice(resp.body))
+        }, (err) => {
+          error(`Receive error from quote:${JSON.stringify(err)}`, true);
+          reject(err)
+        });
+      } else {
+        // using request Token to get accessToken
+        logger.info(`Getting a new token`)
+        const etradeClient = session.getEtradeClient();
+        const verifier = session.getItem('verifier');
+        const reqToken = session.getItem('reqToken');
+        const reqTokenSecret = session.getItem('reqTokenSecret');
+        session.setQuoteUrl(reqUrl);
+        etradeClient.accessToken(reqToken, reqTokenSecret, verifier)
+          .then(accessTokenSuccessQuote, accessTokenFail);
+      }
+    } else {
+      error(`Not a valid symbol: ${symbol}`, false);
+      // next('market', 'quote', 'quote', false);
+      reject(`Not a valid symbol: ${symbol}`)
+    }
+  })
+};
+
+const extractPrice = (data) => {
+  const response = data.QuoteResponse;
+
+  if (typeof response.Messages !== 'undefined') {
+    error(response.Messages);
+    return 0;
+  }
+
+  const resp = data.QuoteResponse.QuoteData[0];
+  if (typeof resp.Product !== 'undefined') {
+    logger.info(`Symbol: ${resp.Product.symbol}`);
+    logger.info(`Security Type: ${resp.Product.securityType}`);
+  }
+
+  if (typeof resp.All !== 'undefined') {
+    return resp.All.bid.toFixed(2);
+  }
+
+  error(`Error extracting the price from ${data}`)
+  return 0
+}
+
+const runBot = () => {
   console.log('Running ...')
+
+
+  function loopWithDelay() {
+    console.log('This message is logged every 1 second');
+    priceFetch('SPY').then(price => {
+      console.log('price is ', price)
+    },(error) => {
+      console.log(error)
+    })
+    
+    setTimeout(loopWithDelay, 1000); // Call the function again after 1 second
+  }
+  
+  loopWithDelay(); // Start the loop
+
 }
 
 module.exports = {

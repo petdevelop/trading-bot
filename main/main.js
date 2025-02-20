@@ -7,7 +7,7 @@ const next = require('./next');
 const processContext = require('./processContext');
 
 process.on('unhandledRejection', (error) => {
-  console.log('unhandledRejection', error.test);
+  console.log('unhandledRejection', error);
   process.exit();
 });
 

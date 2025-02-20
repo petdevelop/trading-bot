@@ -11,7 +11,8 @@ const menus = {
   market: `
 1)       Market Quotes
 2)       Account List
-3)       Exit`,
+3)       Run Bot
+4)       Exit`,
   acctBalance: `
 1)       Balance 
 2)       Go Back`,
