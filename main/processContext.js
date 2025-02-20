@@ -8,11 +8,12 @@ const balanceFetch = require('../accounts/balance');
 const portfolioFetch = require('../accounts/portfolio');
 const viewOrder = require('../order/viewOrder');
 const cancelOrder = require('../order/cancelOrder');
-const {previewOrder, placeOrder} = require('../order/previewOrder');
+const {previewOrder} = require('../order/previewOrder');
 const viewOpenOrder = require('../order/viewOpenOrder');
 const getAcctContext = require('../accounts/getAcctContext');
 const {quoteFetch, runBot} = require('../quotes/quote');
 const { oauthAcctFetch, acctFetch } = require('../accounts/account');
+const { run } = require('../order/bot')
 
 const reqTokenFail = (err) => {
   console.log(`Request Token Failed -- Error is ${JSON.stringify(err)}`);
@@ -47,9 +48,6 @@ function processMarket(input, errmsg1, errmsg2, context) {
       }
       break;
     case '3':
-      runBot()
-      break;
-    case '4':
       process.exit(0);
       break;
     default:
@@ -114,21 +112,7 @@ function processAcctAll(input, errmsg1, errmsg2) {
   } else if (input === '3') {
     viewOrder('all');
   } else if (input === '4') {
-    
-    session.order = {
-      price_type: 'TRAILING_STOP_CNST', //TRAILING_STOP_CNST
-      order_type: 'EQ',
-      client_order_id: Math.floor(Math.random() * (9999999999 - 1000000000)
-        + 1000000000),
-      order_term: 'GOOD_FOR_DAY',
-      // limit_price: 200,
-      symbol: 'BTC',
-      order_action: 'BUY',
-      quantity: 1,
-      stop_price: 150,
-    }
-    previewOrder();
-
+    runBot()
   } else if (input === '5') {
     acctFetch();
   } else {
@@ -244,7 +228,7 @@ const processContext = {
   previewSymbol: processPreviewSymbol,
   previewOrderAction: processPreviewOrderAction,
   previewQuantity: processPreviewQuantity,
-  runBot: processRunBot
+  // runBot: processRunBot
 };
 
 module.exports = processContext;

@@ -6,13 +6,11 @@ const menus = {
   marketOauth: `
 1)       Market Quotes
 2)       Account List
-3)       Run Bot
-4)       Exit`,
+3)       Exit`,
   market: `
 1)       Market Quotes
 2)       Account List
-3)       Run Bot
-4)       Exit`,
+3)       Exit`,
   acctBalance: `
 1)       Balance 
 2)       Go Back`,

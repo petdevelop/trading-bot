@@ -101,7 +101,7 @@ const extractPrice = (data) => {
   return 0
 }
 
-const runBot = () => {
+const a = () => {
   console.log('Running ...')
 
 
@@ -121,6 +121,5 @@ const runBot = () => {
 }
 
 module.exports = {
-  quoteFetch,
-  runBot
+  quoteFetch
 }
