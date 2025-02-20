@@ -9,7 +9,7 @@ logs/
 
 # Environment files
 .env
-.ini
+*.ini
 
 # Operating system files
 .DS_Store
