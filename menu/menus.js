@@ -18,7 +18,8 @@ const menus = {
 1)       Balance 
 2)       Portfolio
 3)       Orders
-4)       Go Back`,
+4)       Run Bot
+5)       Go Back`,
   acctBack: `
 1)       Go Back`,
   order: `

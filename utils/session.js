@@ -11,7 +11,7 @@ const session = {
   live: { consumerKey: '', consumerSecret: '', baseUrl: '' },
   oauth: { authorizeUrl: '', accessUrl: '', tokenUrl: '' },
   order: {
-    price_type: '', order_term: '', symbol: '', order_action: '', limit_price: 0, quantity: '',
+    price_type: '', order_term: '', symbol: '', order_action: '', limit_price: 0, quantity: '', stop_price: 0, trail_price: 0
   },
   api: {
     accountListUri: '', balanceUri: '', portfolioUri: '', quoteUri: '', accountsUri: '',
@@ -114,6 +114,11 @@ const session = {
     const acct = session.acctList[this.currentAcctIdx];
 
     return `${session.api.accountsUri + acct.accountIdKey}/orders/preview.json`;
+  },
+  getPlaceOrderUrl() {
+    const acct = session.acctList[this.currentAcctIdx];
+
+    return `${session.api.accountsUri + acct.accountIdKey}/orders/place.json`;
   },
   getOrderUrl() {
     const acct = session.acctList[this.currentAcctIdx];
