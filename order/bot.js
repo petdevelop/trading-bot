@@ -17,10 +17,12 @@ const TIME_LAPSE = 60 * 1  // Maximum allowed time lapse (in seconds) to buy aga
   const placeOrder = async (orderAction) => {
     const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
 
-    const resp = await previewBotOrder(clientOrderId, orderAction)
-    if (resp.statusCode === 200) {
-      placeBotOrder(clientOrderId, resp.body.PreviewOrderResponse.PreviewIds[0].previewId)
+    const previewResponse = await previewBotOrder(clientOrderId, orderAction)
+    if (previewResponse.statusCode !== 200) { 
+      return error(previewResponse)
     }
+
+    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId)
   }
 
   const getCurrentTimestamp = () => {
@@ -88,63 +90,72 @@ const previewBotOrder = (clientOrderId, orderAction) => {
 };
 
   
-  const placeBotOrder = (clientOrderId, previewId) => {
-    const requestObject = JSON.stringify({
-      PlaceOrderRequest: {
-        orderType: 'EQ',
-        clientOrderId: `${clientOrderId}`,
-        Order: [
-          {
-            allOrNone: false,
-            priceType: 'MARKET',
-            orderTerm: 'GOOD_FOR_DAY',
-            marketSession: 'REGULAR',
-            stopPrice: 222,
-            limitPrice: 222,
-            Instrument: [
-              {
-                Product: {
-                  securityType: 'EQ',
-                  symbol: SYMBOL
-                },
-                orderAction: 'SELL',
-                quantityType: 'QUANTITY',
-                quantity: QUANTITY
-              }
-            ]
+const placeBotOrder = (clientOrderId, previewId) => {
+  return new Promise((resolve, reject) => {
+      const requestObject = JSON.stringify({
+          PlaceOrderRequest: {
+              orderType: 'EQ',
+              clientOrderId: `${clientOrderId}`,
+              Order: [
+                  {
+                      allOrNone: false,
+                      priceType: 'MARKET',
+                      orderTerm: 'GOOD_FOR_DAY',
+                      marketSession: 'REGULAR',
+                      stopPrice: 222,
+                      limitPrice: 222,
+                      Instrument: [
+                          {
+                              Product: {
+                                  securityType: 'EQ',
+                                  symbol: SYMBOL
+                              },
+                              orderAction: 'SELL',
+                              quantityType: 'QUANTITY',
+                              quantity: QUANTITY
+                          }
+                      ]
+                  }
+              ],
+              PreviewIds: [
+                  {
+                      previewId: previewId
+                  }
+              ],
           }
-        ],
-        PreviewIds: [
-            {
-                previewId: previewId
-            }
-        ],
-      }
-    })
+      });
 
-    logger.info(`Sending request to place order with body  \n${JSON.stringify(requestObject, null, 4)}`);
-  
-    const reqUrl = session.getPlaceOrderUrl();
-    const authClient = session.getItem('authClient');
-    const response = authClient.post(reqUrl, requestObject);
-    logger.info(`API url: ${reqUrl}`);
-    logger.info(`Request body: ${requestObject}`);
-    response.then((resp) => {
-      logger.info(`Receive response from Place Order  \n${JSON.stringify(resp, null, 4)}`);
-      if (resp.statusCode === 200) {
-        // printPreviewOrder(resp);
-      } else if (resp.statusCode === 204) {
-        error(`Error processing Place Order statusCode:${resp.statusCode}`, false);
-      } else {
-        error(`Error processing Place Order statusCode:${resp.statusCode}`, false);
-      }
-      // next('order', '0', 'order', true);
-    }).catch((err) => {
-      console.log(err)
-      error(`Receive error from place order: ${JSON.stringify(err)}`, false);
-      // next('order', '0', 'order', true);
-    });
-  };
+      logger.info(`Sending request to place order with body  \n${JSON.stringify(requestObject, null, 4)}`);
+    
+      const reqUrl = session.getPlaceOrderUrl();
+      const authClient = session.getItem('authClient');
+      
+      // Sending POST request to API
+      authClient.post(reqUrl, requestObject)
+          .then((resp) => {
+              logger.info(`API url: ${reqUrl}`);
+              logger.info(`Request body: ${requestObject}`);
+              logger.info(`Receive response from Place Order  \n${JSON.stringify(resp, null, 4)}`);
+              
+              if (resp.statusCode === 200) {
+                  // Successful response, resolve the promise
+                  resolve(resp);
+              } else if (resp.statusCode === 204) {
+                  error(`Error processing Place Order statusCode:${resp.statusCode}`, false);
+                  reject(`Error processing Place Order statusCode:${resp.statusCode}`);  // Reject the promise
+              } else {
+                  error(`Error processing Place Order statusCode:${resp.statusCode}`, false);
+                  reject(`Error processing Place Order statusCode:${resp.statusCode}`);  // Reject the promise
+              }
+          })
+          .catch((err) => {
+              console.log(err);
+              error(`Receive error from place order: ${JSON.stringify(err)}`, false);
+              reject(err);  // Reject the promise with the error
+          });
+  });
+};
+
 
 
 
