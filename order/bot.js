@@ -161,16 +161,16 @@ const runBot = () => {
 
     run(conf1)
 
-    // const conf2 = {
-    //     TRAILING_BUY_PERCENTAGE: 0.004,
-    //     TRAILING_STOP_PERCENTAGE: 0.002,
-    //     SYMBOL: 'SPY',
-    //     QUANTITY: 1,
-    //     TIME_SLEEP: 7,
-    //     TIME_LAPSE: 60 * 1
-    // }
+    const conf2 = {
+        TRAILING_BUY_PERCENTAGE: 0.004,
+        TRAILING_STOP_PERCENTAGE: 0.002,
+        SYMBOL: 'SPY',
+        QUANTITY: 1,
+        TIME_SLEEP: 7,
+        TIME_LAPSE: 60 * 1
+    }
 
-    // run(conf2)
+    run(conf2)
 }
 
 
@@ -194,7 +194,7 @@ const run = async (params) => {
     let sellPrice = 0.0;
 
     while (true) {
-        console.log("----------------------------------------------------");
+        console.log(`------------------------${SYMBOL}----------------------------`);
 
         if (soldOut) {
             const currentPrice = await getCurrentPrice(SYMBOL);
