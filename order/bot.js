@@ -6,9 +6,9 @@ const { quoteBotFetch } = require('../quotes/quote')
 
 
 /** Bot parameters **/ 
-const TRAILING_BUY_PERCENTAGE = 0.04  // Trailing buy percentage for buying  
-const TRAILING_STOP_PERCENTAGE = 0.04  // Trailing stop loss percentage for selling 
-const SYMBOL = "PTN"
+const TRAILING_BUY_PERCENTAGE = 0.004  // Trailing buy percentage for buying  
+const TRAILING_STOP_PERCENTAGE = 0.002  // Trailing stop loss percentage for selling 
+const SYMBOL = "HOLO"
 const QUANTITY = 1  // This is a fixed amount (not a percentage)
 const TIME_SLEEP = 5  // Sleep for X seconds, adjust based on frequency of checks
 const TIME_LAPSE = 60 * 1  // Maximum allowed time lapse (in seconds) to buy again 60 * 30
@@ -22,7 +22,7 @@ const TIME_LAPSE = 60 * 1  // Maximum allowed time lapse (in seconds) to buy aga
       return error(previewResponse)
     }
 
-    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId)
+    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction)
   }
 
   const getCurrentTimestamp = () => {
@@ -90,7 +90,7 @@ const previewBotOrder = (clientOrderId, orderAction) => {
 };
 
   
-const placeBotOrder = (clientOrderId, previewId) => {
+const placeBotOrder = (clientOrderId, previewId, orderAction) => {
   return new Promise((resolve, reject) => {
       const requestObject = JSON.stringify({
           PlaceOrderRequest: {
@@ -110,7 +110,7 @@ const placeBotOrder = (clientOrderId, previewId) => {
                                   securityType: 'EQ',
                                   symbol: SYMBOL
                               },
-                              orderAction: 'SELL',
+                              orderAction: orderAction,
                               quantityType: 'QUANTITY',
                               quantity: QUANTITY
                           }
@@ -160,13 +160,6 @@ const placeBotOrder = (clientOrderId, previewId) => {
 
 
 const runBot = async () => {
-  // previewBotOrder()
-
-    // quoteBotFetch(SYMBOL).then(price => {
-    //   console.log('price is ', price)
-    // },(error) => {
-    //   console.log(error)
-    // })
 
     let trailingBuyPrice = 0.0;
     let trailingSellPrice = 0.0;
@@ -203,7 +196,7 @@ const runBot = async () => {
             console.log(`Lowest Price After Sell: ${lowestPriceAfterSell}`);
             console.log(`Trailing Buy Price: ${trailingBuyPrice}`);
 
-            if (currentPrice < lowestPriceAfterSell) { //todo 
+            if (currentPrice < lowestPriceAfterSell) {  
                 lowestPriceAfterSell = currentPrice;
                 lowestPriceTimestamp = getCurrentTimestamp();
                 trailingBuyPrice = lowestPriceAfterSell * (1 + TRAILING_BUY_PERCENTAGE);
@@ -233,7 +226,7 @@ const runBot = async () => {
                         console.log(`Trailing Sell Price set to: ${trailingSellPrice}`);
 
                         lowestPriceAfterSell = currentPrice;
-                        lowestPriceTimestamp = null;
+                        lowestPriceTimestamp = getCurrentTimestamp();
                         soldOut = false;
                         console.log("You are no longer sold out. Tracking for trailing stop loss.");
                     } else {

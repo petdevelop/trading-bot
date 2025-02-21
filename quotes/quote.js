@@ -95,30 +95,11 @@ const extractPrice = (data) => {
   }
 
   if (typeof resp.All !== 'undefined') {
-    return resp.All.ask.toFixed(2);
+    return resp.All.lastTrade.toFixed(2);
   }
 
   error(`Error extracting the price from ${data}`)
   return 0
-}
-
-const a = () => {
-  console.log('Running ...')
-
-
-  function loopWithDelay() {
-    console.log('This message is logged every 1 second');
-    quoteBotFetch('SPY').then(price => {
-      console.log('price is ', price)
-    },(error) => {
-      console.log(error)
-    })
-    
-    setTimeout(loopWithDelay, 1000); // Call the function again after 1 second
-  }
-  
-  loopWithDelay(); // Start the loop
-
 }
 
 module.exports = {
