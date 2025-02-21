@@ -5,24 +5,16 @@ const error = require('../utils/error');
 const { quoteBotFetch } = require('../quotes/quote')
 
 
-/** Bot parameters **/ 
-const TRAILING_BUY_PERCENTAGE = 0.004  // Trailing buy percentage for buying  
-const TRAILING_STOP_PERCENTAGE = 0.002  // Trailing stop loss percentage for selling 
-const SYMBOL = "HOLO"
-const QUANTITY = 1  // This is a fixed amount (not a percentage)
-const TIME_SLEEP = 5  // Sleep for X seconds, adjust based on frequency of checks
-const TIME_LAPSE = 60 * 1  // Maximum allowed time lapse (in seconds) to buy again 60 * 30
 
-
-  const placeOrder = async (orderAction) => {
+  const placeOrder = async (orderAction, symbol, quantity) => {
     const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
 
-    const previewResponse = await previewBotOrder(clientOrderId, orderAction)
+    const previewResponse = await previewBotOrder(clientOrderId, orderAction, symbol, quantity)
     if (previewResponse.statusCode !== 200) { 
       return error(previewResponse)
     }
 
-    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction)
+    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction, symbol, quantity)
   }
 
   const getCurrentTimestamp = () => {
@@ -34,7 +26,7 @@ const TIME_LAPSE = 60 * 1  // Maximum allowed time lapse (in seconds) to buy aga
     return price ?? 0.0
   }
 
-const previewBotOrder = (clientOrderId, orderAction) => {
+const previewBotOrder = (clientOrderId, orderAction, symbol, quantity) => {
     return new Promise((resolve, reject) => {
         const requestObject = JSON.stringify({
             PreviewOrderRequest: {
@@ -50,11 +42,11 @@ const previewBotOrder = (clientOrderId, orderAction) => {
                             {
                                 Product: {
                                     securityType: 'EQ',
-                                    symbol: SYMBOL
+                                    symbol: symbol
                                 },
                                 orderAction: orderAction,
                                 quantityType: 'QUANTITY',
-                                quantity: QUANTITY
+                                quantity: quantity
                             }
                         ]
                     }
@@ -90,7 +82,7 @@ const previewBotOrder = (clientOrderId, orderAction) => {
 };
 
   
-const placeBotOrder = (clientOrderId, previewId, orderAction) => {
+const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) => {
   return new Promise((resolve, reject) => {
       const requestObject = JSON.stringify({
           PlaceOrderRequest: {
@@ -108,11 +100,11 @@ const placeBotOrder = (clientOrderId, previewId, orderAction) => {
                           {
                               Product: {
                                   securityType: 'EQ',
-                                  symbol: SYMBOL
+                                  symbol: symbol
                               },
                               orderAction: orderAction,
                               quantityType: 'QUANTITY',
-                              quantity: QUANTITY
+                              quantity: quantity
                           }
                       ]
                   }
@@ -157,9 +149,40 @@ const placeBotOrder = (clientOrderId, previewId, orderAction) => {
 };
 
 
+const runBot = () => {
+    const conf1 = {
+        TRAILING_BUY_PERCENTAGE: 0.004,
+        TRAILING_STOP_PERCENTAGE: 0.002,
+        SYMBOL: 'HOLO',
+        QUANTITY: 1,
+        TIME_SLEEP: 5,
+        TIME_LAPSE: 60 * 1
+    }
+
+    run(conf1)
+
+    // const conf2 = {
+    //     TRAILING_BUY_PERCENTAGE: 0.004,
+    //     TRAILING_STOP_PERCENTAGE: 0.002,
+    //     SYMBOL: 'SPY',
+    //     QUANTITY: 1,
+    //     TIME_SLEEP: 7,
+    //     TIME_LAPSE: 60 * 1
+    // }
+
+    // run(conf2)
+}
 
 
-const runBot = async () => {
+const run = async (params) => {
+    const {
+        TRAILING_BUY_PERCENTAGE,
+        TRAILING_STOP_PERCENTAGE,
+        SYMBOL,
+        QUANTITY,
+        TIME_SLEEP,
+        TIME_LAPSE
+    } = params;
 
     let trailingBuyPrice = 0.0;
     let trailingSellPrice = 0.0;
@@ -212,7 +235,7 @@ const runBot = async () => {
                 if (currentPrice >= trailingBuyPrice) { //todo 
                     if (elapsedTime <= TIME_LAPSE) {
                         console.log("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
-                        const buyResponse = await placeOrder('BUY');
+                        const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY);
 
                         if (buyResponse === null) {
                             console.log("Error placing buy order.");
@@ -260,7 +283,7 @@ const runBot = async () => {
 
             if (currentPrice <= trailingSellPrice) {
                 console.log("Price has dropped to the trailing sell price, selling now.");
-                const sellResponse = await placeOrder('SELL');
+                const sellResponse = await placeOrder('SELL', SYMBOL, QUANTITY);
 
                 if (sellResponse === null) {
                     console.log("Error placing sell order.");
