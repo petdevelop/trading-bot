@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const validSymbol = require('../utils/validSymbol');
 const session = require('../utils/session');
 const logger = require('../utils/logger');
