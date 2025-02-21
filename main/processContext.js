@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const open = require('open');
 const session = require('../utils/session');
 const logger = require('../utils/logger');
@@ -11,9 +12,9 @@ const cancelOrder = require('../order/cancelOrder');
 const {previewOrder} = require('../order/previewOrder');
 const viewOpenOrder = require('../order/viewOpenOrder');
 const getAcctContext = require('../accounts/getAcctContext');
-const {quoteFetch, runBot} = require('../quotes/quote');
+const {quoteFetch} = require('../quotes/quote');
 const { oauthAcctFetch, acctFetch } = require('../accounts/account');
-const { run } = require('../order/bot')
+const { runBot } = require('../order/bot')
 
 const reqTokenFail = (err) => {
   console.log(`Request Token Failed -- Error is ${JSON.stringify(err)}`);
@@ -202,9 +203,6 @@ function processPreviewQuantity(input, errmsg1, errmsg2) {
   previewOrder();
 }
 
-function processRunBot() {
-  console.log('run bot ...')
-}
 
 function processQuote(input) {
   quoteFetch(input);
@@ -227,8 +225,7 @@ const processContext = {
   previewLimitPrice: processPreviewLimitPrice,
   previewSymbol: processPreviewSymbol,
   previewOrderAction: processPreviewOrderAction,
-  previewQuantity: processPreviewQuantity,
-  // runBot: processRunBot
+  previewQuantity: processPreviewQuantity
 };
 
 module.exports = processContext;

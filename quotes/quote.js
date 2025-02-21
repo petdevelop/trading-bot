@@ -41,7 +41,7 @@ const quoteFetch = (symbol) => {
   }
 };
 
-const priceFetch = (symbol) => {
+const quoteBotFetch = (symbol) => {
   return new Promise((resolve, reject) => {
     if (validSymbol(symbol)) {
       const reqUrl = `${session.getQuoteUri() + symbol}.json`;
@@ -94,7 +94,7 @@ const extractPrice = (data) => {
   }
 
   if (typeof resp.All !== 'undefined') {
-    return resp.All.bid.toFixed(2);
+    return resp.All.ask.toFixed(2);
   }
 
   error(`Error extracting the price from ${data}`)
@@ -107,7 +107,7 @@ const a = () => {
 
   function loopWithDelay() {
     console.log('This message is logged every 1 second');
-    priceFetch('SPY').then(price => {
+    quoteBotFetch('SPY').then(price => {
       console.log('price is ', price)
     },(error) => {
       console.log(error)
@@ -121,5 +121,5 @@ const a = () => {
 }
 
 module.exports = {
-  quoteFetch
+  quoteFetch, quoteBotFetch
 }
