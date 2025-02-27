@@ -49,11 +49,11 @@ const quoteBotFetch = (symbol) => {
       const authClient = session.getItem('authClient');
       if (authClient !== null) {
         // accessToken exists
-        logger.info(`API url: ${reqUrl}`);
+        // logger.info(`API url: ${reqUrl}`);
         const response = authClient.get(reqUrl);
 
         response.then((resp) => {
-          logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
+          // logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
           // printQuote(resp.body);
           // next('market', '0', 'market', true);
           resolve(extractPrice(resp.body))
@@ -90,8 +90,8 @@ const extractPrice = (data) => {
 
   const resp = data.QuoteResponse.QuoteData[0];
   if (typeof resp.Product !== 'undefined') {
-    logger.info(`Symbol: ${resp.Product.symbol}`);
-    logger.info(`Security Type: ${resp.Product.securityType}`);
+    // logger.info(`Symbol: ${resp.Product.symbol}`);
+    // logger.info(`Security Type: ${resp.Product.securityType}`);
   }
 
   if (typeof resp.All !== 'undefined') {

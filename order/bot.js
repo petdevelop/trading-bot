@@ -6,25 +6,26 @@ const { quoteBotFetch } = require('../quotes/quote')
 
 
 
-  const placeOrder = async (orderAction, symbol, quantity) => {
-    const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
+const placeOrder = async (orderAction, symbol, quantity) => {
+// const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
 
-    const previewResponse = await previewBotOrder(clientOrderId, orderAction, symbol, quantity)
-    if (previewResponse.statusCode !== 200) { 
-      return error(previewResponse)
-    }
+// const previewResponse = await previewBotOrder(clientOrderId, orderAction, symbol, quantity)
+// if (previewResponse.statusCode !== 200) { 
+//   return error(previewResponse)
+// }
 
-    await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction, symbol, quantity)
-  }
+// await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction, symbol, quantity)
+    await Promise.resolve()
+}
 
-  const getCurrentTimestamp = () => {
-      return Math.floor(new Date().getTime() / 1000);
-  }
+const getCurrentTimestamp = () => {
+    return Math.floor(new Date().getTime() / 1000);
+}
 
-  const getCurrentPrice = async (symbol) => {
+const getCurrentPrice = async (symbol) => {
     const price = await quoteBotFetch(symbol)
-    return price ?? 0.0
-  }
+    return Number(price ?? 0.0)
+}
 
 const previewBotOrder = (clientOrderId, orderAction, symbol, quantity) => {
     return new Promise((resolve, reject) => {
@@ -60,9 +61,9 @@ const previewBotOrder = (clientOrderId, orderAction, symbol, quantity) => {
         // Sending POST request to API
         authClient.post(reqUrl, requestObject)
             .then((resp) => {
-                logger.info(`API url: ${reqUrl}`);
-                logger.info(`Request body: ${requestObject}`);
-                logger.info(`Receive response from preview order  \n${JSON.stringify(resp, null, 4)}`);
+                // logger.info(`API url: ${reqUrl}`);
+                // logger.info(`Request body: ${requestObject}`);
+                // logger.info(`Receive response from preview order  \n${JSON.stringify(resp, null, 4)}`);
 
                 if (resp.statusCode === 200) {
                     resolve(resp);  // Resolve the promise with the response
@@ -117,7 +118,7 @@ const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) 
           }
       });
 
-      logger.info(`Sending request to place order with body  \n${JSON.stringify(requestObject, null, 4)}`);
+      // logger.info(`Sending request to place order with body  \n${JSON.stringify(requestObject, null, 4)}`);
     
       const reqUrl = session.getPlaceOrderUrl();
       const authClient = session.getItem('authClient');
@@ -125,9 +126,9 @@ const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) 
       // Sending POST request to API
       authClient.post(reqUrl, requestObject)
           .then((resp) => {
-              logger.info(`API url: ${reqUrl}`);
-              logger.info(`Request body: ${requestObject}`);
-              logger.info(`Receive response from Place Order  \n${JSON.stringify(resp, null, 4)}`);
+              // logger.info(`API url: ${reqUrl}`);
+              // logger.info(`Request body: ${requestObject}`);
+              // logger.info(`Receive response from Place Order  \n${JSON.stringify(resp, null, 4)}`);
               
               if (resp.statusCode === 200) {
                   // Successful response, resolve the promise
@@ -141,7 +142,7 @@ const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) 
               }
           })
           .catch((err) => {
-              console.log(err);
+              logger.info(err);
               error(`Receive error from place order: ${JSON.stringify(err)}`, false);
               reject(err);  // Reject the promise with the error
           });
@@ -151,33 +152,52 @@ const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) 
 
 const runBot = () => {
     const conf1 = {
-        TRAILING_BUY_PERCENTAGE: 0.004,
-        TRAILING_STOP_PERCENTAGE: 0.002,
-        SYMBOL: 'HOLO',
-        QUANTITY: 1,
+        TRAILING_BUY_AMOUNT: 2,
+        TRAILING_STOP_AMOUNT: 1,
+        SYMBOL: 'SPY',
+        QUANTITY: 100,
         TIME_SLEEP: 5,
-        TIME_LAPSE: 60 * 1
+        TIME_LAPSE: 60 * 5
     }
-
     run(conf1)
 
     const conf2 = {
-        TRAILING_BUY_PERCENTAGE: 0.004,
-        TRAILING_STOP_PERCENTAGE: 0.002,
-        SYMBOL: 'SPY',
-        QUANTITY: 1,
-        TIME_SLEEP: 7,
-        TIME_LAPSE: 60 * 1
+        TRAILING_BUY_AMOUNT: 2,
+        TRAILING_STOP_AMOUNT: 1,
+        SYMBOL: 'TSLA',
+        QUANTITY: 100,
+        TIME_SLEEP: 2,
+        TIME_LAPSE: 60 * 3
     }
-
     run(conf2)
+
+    const conf3 = {
+      TRAILING_BUY_AMOUNT: 0.5,
+      TRAILING_STOP_AMOUNT: 0.2,
+      SYMBOL: 'NVDA',
+      QUANTITY: 100,
+      TIME_SLEEP: 3,
+      TIME_LAPSE: 60 * 2
+  }
+  run(conf3)
+
+  const conf4 = {
+    TRAILING_BUY_AMOUNT: 1,
+    TRAILING_STOP_AMOUNT: 0.5,
+    SYMBOL: 'AAPL',
+    QUANTITY: 100,
+    TIME_SLEEP: 4,
+    TIME_LAPSE: 60 * 2
+  }
+  run(conf4)
+
 }
 
 
 const run = async (params) => {
     const {
-        TRAILING_BUY_PERCENTAGE,
-        TRAILING_STOP_PERCENTAGE,
+        TRAILING_BUY_AMOUNT,
+        TRAILING_STOP_AMOUNT,
         SYMBOL,
         QUANTITY,
         TIME_SLEEP,
@@ -192,116 +212,123 @@ const run = async (params) => {
     let soldOut = true;
     let buyPrice = 0.0;
     let sellPrice = 0.0;
+    let totalProfitOrLoss = 0.0;
+    let totalTransations = 0;
 
     while (true) {
-        console.log(`------------------------${SYMBOL}----------------------------`);
 
         if (soldOut) {
             const currentPrice = await getCurrentPrice(SYMBOL);
 
             if (currentPrice === 0.0) {
-                console.log("Error fetching current price!");
+                logger.info("Error fetching current price!");
                 await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
                 continue;
             }
 
-            console.log(`Current Price: ${currentPrice}`);
+            logger.info(`Current Price: ${currentPrice}`);
 
             if (lowestPriceAfterSell === null) {
-                console.log(`Price after sell: ${currentPrice}`);
+                logger.info(`Price after sell: ${currentPrice}`);
                 lowestPriceAfterSell = currentPrice;
                 lowestPriceTimestamp = getCurrentTimestamp();
-                trailingBuyPrice = lowestPriceAfterSell * (1 + TRAILING_BUY_PERCENTAGE);
-                console.log(`Trailing Buy Price set to: ${trailingBuyPrice}`);
-                console.log(`Lowest Price Timestamp: ${lowestPriceTimestamp}`);
+                trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
+                logger.info(`Trailing Buy Price set to: ${trailingBuyPrice}`);
+                logger.info(`Lowest Price Timestamp: ${lowestPriceTimestamp}`);
             }
 
-            console.log(`Lowest Price After Sell: ${lowestPriceAfterSell}`);
-            console.log(`Trailing Buy Price: ${trailingBuyPrice}`);
+            logger.info(`Lowest Price After Sell: ${lowestPriceAfterSell}`);
+            logger.info(`Trailing Buy Price: ${trailingBuyPrice}`);
 
             if (currentPrice < lowestPriceAfterSell) {  
                 lowestPriceAfterSell = currentPrice;
                 lowestPriceTimestamp = getCurrentTimestamp();
-                trailingBuyPrice = lowestPriceAfterSell * (1 + TRAILING_BUY_PERCENTAGE);
-                console.log(`New Lowest Price After Sell: ${lowestPriceAfterSell}`);
-                console.log(`Trailing Buy Price updated to: ${trailingBuyPrice}`);
-                console.log(`New Lowest Price Timestamp: ${lowestPriceTimestamp}`);
+                trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
+                logger.info(`New Lowest Price After Sell: ${lowestPriceAfterSell}`);
+                logger.info(`Trailing Buy Price updated to: ${trailingBuyPrice}`);
+                logger.info(`New Lowest Price Timestamp: ${lowestPriceTimestamp}`);
             }
 
             if (lowestPriceTimestamp !== null) {
                 const elapsedTime = getCurrentTimestamp() - lowestPriceTimestamp;
-                console.log(`Elapsed Time since lowest price: ${elapsedTime} seconds`);
+                logger.info(`Elapsed Time since lowest price: ${elapsedTime} seconds`);
 
                 if (currentPrice >= trailingBuyPrice) { //todo 
                     if (elapsedTime <= TIME_LAPSE) {
-                        console.log("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
+                        logger.info("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
                         const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY);
 
                         if (buyResponse === null) {
-                            console.log("Error placing buy order.");
+                            logger.info("Error placing buy order.");
                             continue;
                         }
 
                         buyPrice = currentPrice;
-                        console.log(`Price after Buy: ${buyPrice}`);
+                        logger.info(`Price after Buy: ${buyPrice}`);
                         highestPriceAfterBuy = currentPrice;
-                        trailingSellPrice = highestPriceAfterBuy * (1 - TRAILING_STOP_PERCENTAGE);
-                        console.log(`Trailing Sell Price set to: ${trailingSellPrice}`);
+                        trailingSellPrice = highestPriceAfterBuy - TRAILING_STOP_AMOUNT;
+                        logger.info(`Trailing Sell Price set to: ${trailingSellPrice}`);
 
                         lowestPriceAfterSell = currentPrice;
                         lowestPriceTimestamp = getCurrentTimestamp();
                         soldOut = false;
-                        console.log("You are no longer sold out. Tracking for trailing stop loss.");
+                        logger.info("You are no longer sold out. Tracking for trailing stop loss.");
                     } else {
-                        console.log(`Price ${currentPrice} is above the trailing buy price ${trailingBuyPrice}, but elapsed time ${elapsedTime} exceeds TIME_LAPSE. Resetting to current price.`);
+                        logger.info(`Price ${currentPrice} is above the trailing buy price ${trailingBuyPrice}, but elapsed time ${elapsedTime} exceeds ${TIME_LAPSE}. Resetting to current price.`);
                         lowestPriceAfterSell = currentPrice;
                         lowestPriceTimestamp = getCurrentTimestamp();
-                        trailingBuyPrice = lowestPriceAfterSell * (1 + TRAILING_BUY_PERCENTAGE);
-                        console.log(`Lowest Price After Sell reset to ${lowestPriceAfterSell}. New Trailing Buy Price: ${trailingBuyPrice}`);
+                        trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
+                        logger.info(`Lowest Price After Sell reset to ${lowestPriceAfterSell}. New Trailing Buy Price: ${trailingBuyPrice}`);
                     }
                 } else {
-                    console.log(`Current price ${currentPrice} is below the trailing buy price ${trailingBuyPrice}. Not placing buy order.`);
+                    logger.info(`Current price ${currentPrice} is below the trailing buy price ${trailingBuyPrice}. Not placing buy order.`);
                 }
             }
         } else {
             const currentPrice = await getCurrentPrice(SYMBOL);
 
             if (currentPrice === 0.0) {
-                console.log("Error fetching current price!");
+                logger.info("Error fetching current price!");
                 await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
                 continue;
             }
 
             if (currentPrice > highestPriceAfterBuy) {
                 highestPriceAfterBuy = currentPrice;
-                trailingSellPrice = highestPriceAfterBuy * (1 - TRAILING_STOP_PERCENTAGE);
-                console.log(`New Highest Price After Buy: ${highestPriceAfterBuy}`);
+                trailingSellPrice = Number(highestPriceAfterBuy - TRAILING_STOP_AMOUNT);
+                logger.info(`New Highest Price After Buy: ${highestPriceAfterBuy}`);
             }
 
-            console.log(`Current Price: ${currentPrice}`);
-            console.log(`Trailing Sell Price: ${trailingSellPrice}`);
+            logger.info(`Current Price: ${currentPrice}`);
+            logger.info(`Trailing Sell Price: ${trailingSellPrice}`);
 
             if (currentPrice <= trailingSellPrice) {
-                console.log("Price has dropped to the trailing sell price, selling now.");
+                logger.info("Price has dropped to the trailing sell price, selling now.");
                 const sellResponse = await placeOrder('SELL', SYMBOL, QUANTITY);
 
                 if (sellResponse === null) {
-                    console.log("Error placing sell order.");
+                    error("Error placing sell order.");
                 } else {
                     sellPrice = currentPrice;
-                    const profitOrLoss = sellPrice - buyPrice;
+                    const profitOrLoss = QUANTITY * (sellPrice - buyPrice);
+                    totalProfitOrLoss += profitOrLoss;  // Add the current profit or loss to the total
                     lowestPriceAfterSell = sellPrice;
-                    console.log(`Sell Price: ${sellPrice}`);
-                    console.log(`Buy Price: ${buyPrice}`);
-                    console.log(`Profit/Loss for this trade: ${profitOrLoss}`);
+                    totalTransations += 1;
+                    logger.info(`Sell Price: ${sellPrice}`);
+                    logger.info(`Buy Price: ${buyPrice}`);
+                    logger.info(`Profit/Loss for this trade: $${profitOrLoss}`);
 
                     soldOut = true;
-                    console.log("You are now sold out. Ready to buy again.");
+                    logger.info("You are now sold out. Ready to buy again.");
                 }
 
                 await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
             }
         }
+       
+        logger.info(`Total Transaction: ${totalTransations}`); 
+        logger.info(`Total Profit/Loss: $${totalProfitOrLoss}`);
+        logger.info(`---^---------------------${SYMBOL}------------------------^----`);
 
         await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
     }
