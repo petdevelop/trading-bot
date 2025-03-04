@@ -187,16 +187,16 @@ const runBot = () => {
     }
     run(conf2)
 
-    const conf3 = {
-      TRAILING_BUY_AMOUNT: 0.15,
-      TRAILING_STOP_AMOUNT: 0.1,
-      SYMBOL: 'NVDA',
-      QUANTITY: 100,
-      TIME_SLEEP: 1.5,
-      TIME_LAPSE: 5,
-      LIVE: true
-  }
-  run(conf3)
+//     const conf3 = {
+//       TRAILING_BUY_AMOUNT: 0.15,
+//       TRAILING_STOP_AMOUNT: 0.1,
+//       SYMBOL: 'NVDA',
+//       QUANTITY: 100,
+//       TIME_SLEEP: 1.5,
+//       TIME_LAPSE: 5,
+//       LIVE: true
+//   }
+//   run(conf3)
 
 //   const conf4 = {
 //     TRAILING_BUY_AMOUNT: 0.7,
@@ -245,11 +245,20 @@ const run = async (params) => {
     let totalProfitOrLoss = 0.0;
     let totalTransations = 0;
     let totalMisBuys = 0;
+    let currentPrice = null;
+    let previousPrice = null;
+    let secondPreviousPrice = null;
 
     while (true) {
+        secondPreviousPrice = previousPrice;
+        previousPrice = currentPrice;
+        currentPrice = await getCurrentPrice(SYMBOL);
+
+        console.log('currentPrice', currentPrice)
+        console.log('previousPrice', previousPrice)
+        console.log('secondPreviousPrice', secondPreviousPrice)
 
         if (soldOut) {
-            const currentPrice = await getCurrentPrice(SYMBOL);
 
             logger.info(`------------------------${SYMBOL}----------------------------`);
             logger.info(`Live: ${LIVE}`);
@@ -290,8 +299,8 @@ const run = async (params) => {
                 const elapsedTime = getCurrentTimestamp() - lowestPriceTimestamp;
                 logger.info(`Elapsed Time since lowest price: ${elapsedTime} seconds`);
 
-                if (currentPrice >= trailingBuyPrice) { //todo 
-                    if (elapsedTime <= TIME_LAPSE) {
+                if (currentPrice >= trailingBuyPrice) { 
+                    if (elapsedTime <= TIME_LAPSE && secondPreviousPrice !== null && currentPrice >= secondPreviousPrice) {
                         logger.info("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
                         const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY, LIVE);
 
