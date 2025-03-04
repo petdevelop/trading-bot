@@ -47,10 +47,13 @@ const quoteBotFetch = (symbol) => {
     if (validSymbol(symbol)) {
       const reqUrl = `${session.getQuoteUri() + symbol}.json`;
       const authClient = session.getItem('authClient');
+      const requestObject = {
+        'detailFlag': 'ALL'
+      }
       if (authClient !== null) {
         // accessToken exists
         // logger.info(`API url: ${reqUrl}`);
-        const response = authClient.get(reqUrl);
+        const response = authClient.get(reqUrl, requestObject);
 
         response.then((resp) => {
           // logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
@@ -89,10 +92,14 @@ const extractPrice = (data) => {
   }
 
   const resp = data.QuoteResponse.QuoteData[0];
-  if (typeof resp.Product !== 'undefined') {
+  // if (typeof resp.Product !== 'undefined') {
     // logger.info(`Symbol: ${resp.Product.symbol}`);
     // logger.info(`Security Type: ${resp.Product.securityType}`);
-  }
+  // }
+
+  // if (typeof resp.All.ExtendedHourQuoteDetail !== 'undefined') {
+  //   return resp.All.ExtendedHourQuoteDetail.lastPrice.toFixed(2); 
+  // }
 
   if (typeof resp.All !== 'undefined') {
     return resp.All.lastTrade.toFixed(2);

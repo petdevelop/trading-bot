@@ -6,16 +6,25 @@ const { quoteBotFetch } = require('../quotes/quote')
 
 
 
-const placeOrder = async (orderAction, symbol, quantity) => {
-// const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
+const placeOrder = async (orderAction, symbol, quantity, live) => {
+    if (!live) 
+        return await Promise.resolve()
 
-// const previewResponse = await previewBotOrder(clientOrderId, orderAction, symbol, quantity)
-// if (previewResponse.statusCode !== 200) { 
-//   return error(previewResponse)
-// }
+    const clientOrderId = Math.floor(Math.random() * (9999999999 - 1000000000) + 1000000000);
 
-// await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction, symbol, quantity)
-    await Promise.resolve()
+    try {
+        const previewResponse = await previewBotOrder(clientOrderId, orderAction, symbol, quantity)
+        if (previewResponse.statusCode !== 200) { 
+            error(previewResponse)
+            return null;
+        } else {
+            return await placeBotOrder(clientOrderId, previewResponse.body.PreviewOrderResponse.PreviewIds[0].previewId, orderAction, symbol, quantity)
+        }
+    } catch(error) {
+        error(error);
+        return null;
+    }
+
 }
 
 const getCurrentTimestamp = () => {
@@ -23,8 +32,13 @@ const getCurrentTimestamp = () => {
 }
 
 const getCurrentPrice = async (symbol) => {
-    const price = await quoteBotFetch(symbol)
-    return Number(price ?? 0.0)
+    let price;
+    try {
+        price = await quoteBotFetch(symbol)
+    } catch(err) {
+        price = 0.0
+    }
+    return Number(price)
 }
 
 const previewBotOrder = (clientOrderId, orderAction, symbol, quantity) => {
@@ -151,45 +165,60 @@ const placeBotOrder = (clientOrderId, previewId, orderAction, symbol, quantity) 
 
 
 const runBot = () => {
-    const conf1 = {
-        TRAILING_BUY_AMOUNT: 2,
-        TRAILING_STOP_AMOUNT: 1,
-        SYMBOL: 'SPY',
-        QUANTITY: 100,
-        TIME_SLEEP: 5,
-        TIME_LAPSE: 60 * 5
-    }
-    run(conf1)
+    // const conf1 = {
+    //     TRAILING_BUY_AMOUNT: 0.2,
+    //     TRAILING_STOP_AMOUNT: 0.1,
+    //     SYMBOL: 'INTC',
+    //     QUANTITY: 100,
+    //     TIME_SLEEP: 1.5,
+    //     TIME_LAPSE: 5,
+    //     LIVE: true
+    // }
+    // run(conf1)
 
     const conf2 = {
-        TRAILING_BUY_AMOUNT: 2,
-        TRAILING_STOP_AMOUNT: 1,
+        TRAILING_BUY_AMOUNT: 0.3,
+        TRAILING_STOP_AMOUNT: 0.15,
         SYMBOL: 'TSLA',
         QUANTITY: 100,
-        TIME_SLEEP: 2,
-        TIME_LAPSE: 60 * 3
+        TIME_SLEEP: 1,
+        TIME_LAPSE: 5,
+        LIVE: true
     }
     run(conf2)
 
     const conf3 = {
-      TRAILING_BUY_AMOUNT: 0.5,
-      TRAILING_STOP_AMOUNT: 0.2,
+      TRAILING_BUY_AMOUNT: 0.15,
+      TRAILING_STOP_AMOUNT: 0.1,
       SYMBOL: 'NVDA',
       QUANTITY: 100,
-      TIME_SLEEP: 3,
-      TIME_LAPSE: 60 * 2
+      TIME_SLEEP: 1.5,
+      TIME_LAPSE: 5,
+      LIVE: true
   }
   run(conf3)
 
-  const conf4 = {
-    TRAILING_BUY_AMOUNT: 1,
-    TRAILING_STOP_AMOUNT: 0.5,
-    SYMBOL: 'AAPL',
-    QUANTITY: 100,
-    TIME_SLEEP: 4,
-    TIME_LAPSE: 60 * 2
-  }
-  run(conf4)
+//   const conf4 = {
+//     TRAILING_BUY_AMOUNT: 0.7,
+//     TRAILING_STOP_AMOUNT: 0.3,
+//     SYMBOL: 'AAPL',
+//     QUANTITY: 100,
+//     TIME_SLEEP: 5,
+//     TIME_LAPSE: 60 * 1,
+//     LIVE: true
+//   }
+//   run(conf4)
+
+//   const conf5 = {
+//     TRAILING_BUY_AMOUNT: 1,
+//     TRAILING_STOP_AMOUNT: 0.5,
+//     SYMBOL: 'SPY',
+//     QUANTITY: 10,
+//     TIME_SLEEP: 2,
+//     TIME_LAPSE: 60 * 2,
+//     LIVE: true
+//   }
+//   run(conf5)
 
 }
 
@@ -201,7 +230,8 @@ const run = async (params) => {
         SYMBOL,
         QUANTITY,
         TIME_SLEEP,
-        TIME_LAPSE
+        TIME_LAPSE,
+        LIVE
     } = params;
 
     let trailingBuyPrice = 0.0;
@@ -214,11 +244,18 @@ const run = async (params) => {
     let sellPrice = 0.0;
     let totalProfitOrLoss = 0.0;
     let totalTransations = 0;
+    let totalMisBuys = 0;
 
     while (true) {
 
         if (soldOut) {
             const currentPrice = await getCurrentPrice(SYMBOL);
+
+            logger.info(`------------------------${SYMBOL}----------------------------`);
+            logger.info(`Live: ${LIVE}`);
+            logger.info(`Total Transaction: ${totalTransations}`); 
+            logger.info(`Total Profit/Loss: $${totalProfitOrLoss}`);
+            logger.info(`Total Misbuys: ${totalMisBuys}`);
 
             if (currentPrice === 0.0) {
                 logger.info("Error fetching current price!");
@@ -256,7 +293,7 @@ const run = async (params) => {
                 if (currentPrice >= trailingBuyPrice) { //todo 
                     if (elapsedTime <= TIME_LAPSE) {
                         logger.info("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
-                        const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY);
+                        const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY, LIVE);
 
                         if (buyResponse === null) {
                             logger.info("Error placing buy order.");
@@ -279,6 +316,7 @@ const run = async (params) => {
                         lowestPriceTimestamp = getCurrentTimestamp();
                         trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
                         logger.info(`Lowest Price After Sell reset to ${lowestPriceAfterSell}. New Trailing Buy Price: ${trailingBuyPrice}`);
+                        totalMisBuys += 1
                     }
                 } else {
                     logger.info(`Current price ${currentPrice} is below the trailing buy price ${trailingBuyPrice}. Not placing buy order.`);
@@ -304,7 +342,7 @@ const run = async (params) => {
 
             if (currentPrice <= trailingSellPrice) {
                 logger.info("Price has dropped to the trailing sell price, selling now.");
-                const sellResponse = await placeOrder('SELL', SYMBOL, QUANTITY);
+                const sellResponse = await placeOrder('SELL', SYMBOL, QUANTITY, LIVE);
 
                 if (sellResponse === null) {
                     error("Error placing sell order.");
@@ -326,9 +364,6 @@ const run = async (params) => {
             }
         }
        
-        logger.info(`Total Transaction: ${totalTransations}`); 
-        logger.info(`Total Profit/Loss: $${totalProfitOrLoss}`);
-        logger.info(`---^---------------------${SYMBOL}------------------------^----`);
 
         await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
     }
