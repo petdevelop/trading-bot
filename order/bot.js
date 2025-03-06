@@ -177,50 +177,52 @@ const runBot = () => {
     // run(conf1)
 
     const conf2 = {
-        TRAILING_BUY_AMOUNT: 0.3,
+        TRAILING_BUY_AMOUNT: 0.35,
         TRAILING_STOP_AMOUNT: 0.15,
         SYMBOL: 'TSLA',
-        QUANTITY: 100,
+        QUANTITY: 50,
         TIME_SLEEP: 1,
         TIME_LAPSE: 5,
-        RESET_SELL_PRICE_EVERY: 20,
+        RESET_SELL_PRICE_EVERY: 50,
         LIVE: true
     }
     run(conf2)
 
     const conf3 = {
-      TRAILING_BUY_AMOUNT: 0.15,
-      TRAILING_STOP_AMOUNT: 0.1,
+      TRAILING_BUY_AMOUNT: 0.18,
+      TRAILING_STOP_AMOUNT: 0.07,
       SYMBOL: 'NVDA',
-      QUANTITY: 100,
-      TIME_SLEEP: 1.5,
+      QUANTITY: 50,
+      TIME_SLEEP: 1.1,
       TIME_LAPSE: 5,
-      RESET_SELL_PRICE_EVERY: 20,
+      RESET_SELL_PRICE_EVERY: 50,
       LIVE: true
+    }
+    run(conf3)
+
+  const conf4 = {
+    TRAILING_BUY_AMOUNT: 0.15,
+    TRAILING_STOP_AMOUNT: 0.05,
+    SYMBOL: 'AAPL',
+    QUANTITY: 50,
+    TIME_SLEEP: 1.2,
+    TIME_LAPSE: 5,
+    RESET_SELL_PRICE_EVERY: 50,
+    LIVE: true
   }
-  run(conf3)
+  run(conf4)
 
-//   const conf4 = {
-//     TRAILING_BUY_AMOUNT: 0.7,
-//     TRAILING_STOP_AMOUNT: 0.3,
-//     SYMBOL: 'AAPL',
-//     QUANTITY: 100,
-//     TIME_SLEEP: 5,
-//     TIME_LAPSE: 60 * 1,
-//     LIVE: true
-//   }
-//   run(conf4)
-
-//   const conf5 = {
-//     TRAILING_BUY_AMOUNT: 1,
-//     TRAILING_STOP_AMOUNT: 0.5,
-//     SYMBOL: 'SPY',
-//     QUANTITY: 10,
-//     TIME_SLEEP: 2,
-//     TIME_LAPSE: 60 * 2,
-//     LIVE: true
-//   }
-//   run(conf5)
+  const conf5 = {
+    TRAILING_BUY_AMOUNT: 0.05,
+    TRAILING_STOP_AMOUNT: 0.02,
+    SYMBOL: 'INTL',
+    QUANTITY: 10,
+    TIME_SLEEP: 1.3,
+    TIME_LAPSE: 5,
+    RESET_SELL_PRICE_EVERY: 50,
+    LIVE: true
+  }
+  run(conf5)
 
 }
 
@@ -233,7 +235,7 @@ const run = async (params) => {
         QUANTITY,
         TIME_SLEEP,
         TIME_LAPSE,
-        RESET_SELL_PRICE_AMOUNT,
+        RESET_SELL_PRICE_EVERY,
         LIVE
     } = params;
 
@@ -250,31 +252,26 @@ const run = async (params) => {
     let totalMisBuys = 0;
 
     while (true) {
+        const currentPrice = await getCurrentPrice(SYMBOL);
+        if (currentPrice === 0.0) {
+            logger.info("Error fetching current price!");
+            await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
+            continue;
+        }
+
+        logger.info(`------------------------${SYMBOL}----------------------------`);
+        logger.info(`Live: ${LIVE}`);
+        logger.info(`Total Transaction: ${totalTransations}`); 
+        logger.info(`Total Profit/Loss: $${totalProfitOrLoss}`);
+        logger.info(`Total Misbuys: ${totalMisBuys}`);
+        logger.info(`Current Price: ${currentPrice}`);
+
 
         if (soldOut) {
-            const currentPrice = await getCurrentPrice(SYMBOL);
-
-            logger.info(`------------------------${SYMBOL}----------------------------`);
-            logger.info(`Live: ${LIVE}`);
-            logger.info(`Total Transaction: ${totalTransations}`); 
-            logger.info(`Total Profit/Loss: $${totalProfitOrLoss}`);
-            logger.info(`Total Misbuys: ${totalMisBuys}`);
-
-            if (currentPrice === 0.0) {
-                logger.info("Error fetching current price!");
-                await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
-                continue;
-            }
-
-            logger.info(`Current Price: ${currentPrice}`);
-
             if (lowestPriceAfterSell === null) {
-                logger.info(`Price after sell: ${currentPrice}`);
                 lowestPriceAfterSell = currentPrice;
                 lowestPriceTimestamp = getCurrentTimestamp();
                 trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
-                logger.info(`Trailing Buy Price set to: ${trailingBuyPrice}`);
-                logger.info(`Lowest Price Timestamp: ${lowestPriceTimestamp}`);
             }
 
             logger.info(`Lowest Price After Sell: ${lowestPriceAfterSell}`);
@@ -289,51 +286,40 @@ const run = async (params) => {
                 logger.info(`New Lowest Price Timestamp: ${lowestPriceTimestamp}`);
             }
 
-            if (lowestPriceTimestamp !== null) {
-                const elapsedTime = getCurrentTimestamp() - lowestPriceTimestamp;
-                logger.info(`Elapsed Time since lowest price: ${elapsedTime} seconds`);
+            const elapsedTime = getCurrentTimestamp() - lowestPriceTimestamp;
+            logger.info(`Elapsed Time since lowest price: ${elapsedTime} seconds`);
 
-                if (currentPrice >= trailingBuyPrice && 
-                    elapsedTime <= TIME_LAPSE && 
-                    currentPrice >= sellPrice) {
-
+            if (currentPrice >= trailingBuyPrice || elapsedTime > TIME_LAPSE) {
+                if (elapsedTime <= TIME_LAPSE && currentPrice >= sellPrice) {
                     logger.info("Price has risen above trailing buy price and elapsed time is within the allowed range, placing buy order.");
                     const buyResponse = await placeOrder('BUY', SYMBOL, QUANTITY, LIVE);
-
+    
                     if (buyResponse === null) {
                         logger.info("Error placing buy order.");
                         continue;
                     }
-
+    
                     buyPrice = currentPrice;
-                    logger.info(`Price after Buy: ${buyPrice}`);
                     highestPriceAfterBuy = currentPrice;
                     trailingSellPrice = highestPriceAfterBuy - TRAILING_STOP_AMOUNT;
-                    logger.info(`Trailing Sell Price set to: ${trailingSellPrice}`);
-
                     lowestPriceAfterSell = currentPrice;
                     lowestPriceTimestamp = getCurrentTimestamp();
                     soldOut = false;
+                    logger.info(`Price after Buy: ${buyPrice}`);
+                    logger.info(`Trailing Sell Price set to: ${trailingSellPrice}`);
                     logger.info("You are no longer sold out. Tracking for trailing stop loss.");
                 } else {
-                    logger.info(`Price ${currentPrice} is above the trailing buy price ${trailingBuyPrice}, but elapsed time ${elapsedTime} exceeds ${TIME_LAPSE}. Resetting to current price.`);
-                    logger.info(`or ${currentPrice} is below ${sellPrice}`);
+                    logger.info(`Elapsed time ${elapsedTime} exceeds ${TIME_LAPSE} or ${currentPrice} is below ${sellPrice}. Resetting to current price`);
                     lowestPriceAfterSell = currentPrice;
                     lowestPriceTimestamp = getCurrentTimestamp();
                     trailingBuyPrice = Number(lowestPriceAfterSell + TRAILING_BUY_AMOUNT);
                     logger.info(`Lowest Price After Sell reset to ${lowestPriceAfterSell}. New Trailing Buy Price: ${trailingBuyPrice}`);
                     totalMisBuys += 1
                 }
+            } else
+                logger.info(`Price ${currentPrice} is below ${trailingBuyPrice}`);
                 
-            }
         } else {
-            const currentPrice = await getCurrentPrice(SYMBOL);
-
-            if (currentPrice === 0.0) {
-                logger.info("Error fetching current price!");
-                await new Promise(resolve => setTimeout(resolve, TIME_SLEEP * 1000));
-                continue;
-            }
 
             if (currentPrice > highestPriceAfterBuy) {
                 highestPriceAfterBuy = currentPrice;
