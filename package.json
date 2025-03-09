@@ -26,7 +26,8 @@
     "ora": "^3.0.0",
     "promise": "^6.1.0",
     "request": "^2.55.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "yahoo-finance2": "^2.13.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",

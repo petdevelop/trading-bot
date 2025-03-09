@@ -2,7 +2,8 @@ const menus = {
   top: `
 1)       Sandbox Consumer Key
 2)       Live Consumer Key
-3)       Exit`,
+3)       Exit
+4)       Run Back Test`,
   marketOauth: `
 1)       Market Quotes
 2)       Account List

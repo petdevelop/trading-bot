@@ -14,7 +14,7 @@ const viewOpenOrder = require('../order/viewOpenOrder');
 const getAcctContext = require('../accounts/getAcctContext');
 const {quoteFetch} = require('../quotes/quote');
 const { oauthAcctFetch, acctFetch } = require('../accounts/account');
-const { runBot } = require('../order/bot')
+const { runBot, runBacktest } = require('../order/bot')
 
 const reqTokenFail = (err) => {
   console.log(`Request Token Failed -- Error is ${JSON.stringify(err)}`);
@@ -67,7 +67,11 @@ function processTop(input, errmsg1, errmsg2) {
     if (input === '3') {
       console.log('Bye!');
       process.exit(0);
-    }
+    } else if(input === '4') {
+      runBacktest()
+      return;
+    }  
+
     error(errmsg1 + input + errmsg2, false);
     next('top', '0', 'top', true);
   }

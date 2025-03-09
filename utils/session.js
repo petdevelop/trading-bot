@@ -72,11 +72,11 @@ const session = {
     return session.keyType;
   },
   getBaseUrl() {
-    return session[session.keyType].baseUrl;
+    return session[session.keyType]?.baseUrl;
   },
   getHostName() {
     const baseUrl = session.getBaseUrl();
-    return baseUrl.slice(8);
+    return baseUrl?.slice(8);
   },
   getQuoteUri() {
     return session.api.quoteUri;

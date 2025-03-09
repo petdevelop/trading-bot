@@ -59,7 +59,8 @@ const quoteBotFetch = (symbol) => {
           // logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
           // printQuote(resp.body);
           // next('market', '0', 'market', true);
-          resolve(extractPrice(resp.body))
+          const [lastTrade, timeOfLastTrade] = extractPrice(resp.body)
+          resolve([lastTrade, timeOfLastTrade])
         }, (err) => {
           error(`Receive error from quote:${JSON.stringify(err)}`, true);
           reject(err)
@@ -102,7 +103,7 @@ const extractPrice = (data) => {
   // }
 
   if (typeof resp.All !== 'undefined') {
-    return resp.All.lastTrade.toFixed(2);
+    return [resp.All.lastTrade.toFixed(2), resp.All.timeOfLastTrade];
   }
 
   error(`Error extracting the price from ${data}`)
