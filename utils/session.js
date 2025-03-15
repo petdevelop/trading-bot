@@ -8,7 +8,7 @@ const session = {
   etradeClient: null,
   openOrderList: [{}],
   sandbox: { consumerKey: '', consumerSecret: '', baseUrl: '' },
-  live: { consumerKey: '', consumerSecret: '', baseUrl: '' },
+  live: { consumerKey: '', consumerSecret: '', baseUrl: '', token: '', tokenSecret: '' },
   oauth: { authorizeUrl: '', accessUrl: '', tokenUrl: '' },
   order: {
     price_type: '', order_term: '', symbol: '', order_action: '', limit_price: 0, quantity: '', stop_price: 0, trail_price: 0
@@ -47,6 +47,18 @@ const session = {
   getConsumerKey() {
     const ret = (session.current !== null) ? session.current.consumerKey : null;
     return ret;
+  },
+  getToken() {
+    const {current} = session
+    if (! current) return null
+
+    const {token, tokenSecret} = current
+    if (! token || ! tokenSecret) return null
+
+    console.log('token=',token)
+    console.log('tokenSecret=',tokenSecret)
+
+    return {token, tokenSecret}
   },
   getConsumerSecret() {
     const ret = (session.current !== null) ? session.current.consumerSecret : null;

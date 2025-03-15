@@ -4,8 +4,8 @@ function validKeyType(type) {
   switch (type) {
     case '1': // sandbox
     case '2': // live
-      return true;
-    case '3':
+      return true
+    case '4':
       return false;
     default:
       return false;

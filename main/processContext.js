@@ -14,26 +14,37 @@ const viewOpenOrder = require('../order/viewOpenOrder');
 const getAcctContext = require('../accounts/getAcctContext');
 const {quoteFetch} = require('../quotes/quote');
 const { oauthAcctFetch, acctFetch } = require('../accounts/account');
-const { runBot, runBacktest } = require('../order/bot')
+const { goLong, runBacktest } = require('../order/bot-long')
+const { goShort, goSideWays } = require('../order/bot-side-ways')
 
 const reqTokenFail = (err) => {
   console.log(`Request Token Failed -- Error is ${JSON.stringify(err)}`);
 };
 
-const reqTokenSuccess = (resp) => {
+const reqTokenSuccess = (resp, context) => {
   const authorizeUrl = session.getAuthorizeUrl(resp.token);
   const keyType = session.getKeyType();
 
   session.setItem('reqToken', resp.token);
   session.setItem('reqTokenSecret', resp.tokenSecret);
+
+  console.log('live.token', resp.token)
+  console.log('live.tokenSecret', resp.tokenSecret)
+
   open(authorizeUrl);
-  next('top', keyType, 'oauth', false);
+  next('top', keyType, context || 'oauth', false);
 };
 
-function authorization() {
+function authorization(context) {
   const etradeClient = session.createEtradeClient();
   const response = etradeClient.requestToken({ oauth_callback: 'oob' });
-  response.then(reqTokenSuccess, reqTokenFail);
+  // response.then(reqTokenSuccess, reqTokenFail);
+
+  response.then((resp) => {
+    reqTokenSuccess(resp, context)
+  }, err => {
+    reqTokenFail(err)
+  });
 }
 
 function processMarket(input, errmsg1, errmsg2, context) {
@@ -62,19 +73,28 @@ function processTop(input, errmsg1, errmsg2) {
     const typeMap = { 1: 'sandbox', 2: 'live' };
     session.setKeyType(typeMap[input]);
     logger.info(`User key type is : ${typeMap[input]}`);
-    authorization();
+
+    authorization()
   } else {
     if (input === '3') {
-      console.log('Bye!');
+      console.log(session.token, session.tokenSecret)
+      if (! session.token || ! session.tokenSecret) {
+        session.setKeyType('live');
+        authorization('goLongLife')
+      } else {
+        goLongLife()
+      }
+    } else if (input === '4') {
       process.exit(0);
-    } else if(input === '4') {
-      runBacktest()
-      return;
-    }  
+    } 
 
     error(errmsg1 + input + errmsg2, false);
     next('top', '0', 'top', true);
   }
+}
+
+function processGoLongLife() {
+  goLong()
 }
 
 function processOauth(input, errmsg1, errmsg2) {
@@ -117,8 +137,13 @@ function processAcctAll(input, errmsg1, errmsg2) {
   } else if (input === '3') {
     viewOrder('all');
   } else if (input === '4') {
-    runBot()
+    goLong()
   } else if (input === '5') {
+    goShort()
+  } else if (input === '6') {
+    goSideWays()
+  } 
+  else if (input === '7') {
     acctFetch();
   } else {
     error(errmsg1 + input + errmsg2, false);
@@ -229,7 +254,8 @@ const processContext = {
   previewLimitPrice: processPreviewLimitPrice,
   previewSymbol: processPreviewSymbol,
   previewOrderAction: processPreviewOrderAction,
-  previewQuantity: processPreviewQuantity
+  previewQuantity: processPreviewQuantity,
+  goLongLife: processGoLongLife
 };
 
 module.exports = processContext;

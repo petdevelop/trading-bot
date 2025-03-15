@@ -2,8 +2,8 @@ const menus = {
   top: `
 1)       Sandbox Consumer Key
 2)       Live Consumer Key
-3)       Exit
-4)       Run Back Test`,
+3)       Go Long Live
+4)       Exit`,
   marketOauth: `
 1)       Market Quotes
 2)       Account List
@@ -19,8 +19,10 @@ const menus = {
 1)       Balance 
 2)       Portfolio
 3)       Orders
-4)       Run Bot
-5)       Go Back`,
+4)       Go Long
+5)       Go Short
+6)       Go SideWays
+7)       Go Back`,
   acctBack: `
 1)       Go Back`,
   order: `
