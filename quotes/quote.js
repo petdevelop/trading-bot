@@ -59,8 +59,7 @@ const quoteBotFetch = (symbol) => {
           // logger.info(`Receive response from Quotes: \n${JSON.stringify(resp, null, 4)}`);
           // printQuote(resp.body);
           // next('market', '0', 'market', true);
-          const [lastTrade, timeOfLastTrade] = extractPrice(resp.body)
-          resolve([lastTrade, timeOfLastTrade])
+          resolve(extractPrice(resp.body))
         }, (err) => {
           error(`Receive error from quote:${JSON.stringify(err)}`, true);
           reject(err)
@@ -98,12 +97,30 @@ const extractPrice = (data) => {
     // logger.info(`Security Type: ${resp.Product.securityType}`);
   // }
 
-  // if (typeof resp.All.ExtendedHourQuoteDetail !== 'undefined') {
-  //   return resp.All.ExtendedHourQuoteDetail.lastPrice.toFixed(2); 
-  // }
+  if (typeof resp.All.ExtendedHourQuoteDetail !== 'undefined') {
+    const bidPrice = resp.All.ExtendedHourQuoteDetail.bid.toFixed(2)
+    const askPrice = resp.All.ExtendedHourQuoteDetail.ask.toFixed(2)
+    // const ave = ((bid + ask)/2).toFixed(2)
+    //lastTrade
+    // return [bid, ask, resp.All.ExtendedHourQuoteDetail.timeOfLastTrade, false];
+    return {
+      bidPrice,
+      askPrice,
+      lastTradePrice: resp.All.ExtendedHourQuoteDetail.lastPrice.toFixed(2),
+      timeOfLastTrade: resp.All.ExtendedHourQuoteDetail.timeOfLastTrade,
+      regularOrder: false
+    } 
+  } 
 
   if (typeof resp.All !== 'undefined') {
-    return [resp.All.lastTrade.toFixed(2), resp.All.timeOfLastTrade];
+    // return [resp.All.lastTrade.toFixed(2), resp.All.timeOfLastTrade, true];
+    return {
+      bidPrice: null,
+      askPrice: null,
+      lastTradePrice: resp.All.lastTrade.toFixed(2),
+      timeOfLastTrade: resp.All.timeOfLastTrade,
+      regularOrder: true
+    } 
   }
 
   error(`Error extracting the price from ${data}`)
